@@ -1,0 +1,41 @@
+{
+  "name": "e1-cipher",
+  "version": "0.1.0",
+  "description": "E1-CIPHER: a reproducible research platform for confidential physical-AI compute on energy-constrained edge hardware. CKKS benchmark suite, policy-driven crypto placement, and encrypted fleet aggregation, built as a case study for Efficient Computer's Electron E1.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bench:ckks": "tsx tools/bench/ckks-bench.ts",
+    "bench:kernels": "tsx tools/bench/kernel-bench.ts",
+    "fleet:compare": "tsx apps/fleet/compare.ts",
+    "security:manifest": "tsx tools/security/generate-manifest.ts",
+    "security:sbom": "cyclonedx-npm --output-file results/sbom.json",
+    "test": "tsx --test lib/**/*.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samfrazerdutton/E1-CIPHER.git"
+  },
+  "keywords": [
+    "ckks",
+    "homomorphic-encryption",
+    "confidential-computing",
+    "edge-ai",
+    "efficient-computer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/samfrazerdutton/E1-CIPHER/issues"
+  },
+  "homepage": "https://github.com/samfrazerdutton/E1-CIPHER#readme",
+  "dependencies": {
+    "node-seal": "^7.0.0"
+  },
+  "devDependencies": {
+    "@cyclonedx/cyclonedx-npm": "^6.0.1",
+    "@types/node": "^26.6.4",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

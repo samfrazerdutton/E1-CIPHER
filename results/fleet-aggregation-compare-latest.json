@@ -1,0 +1,190 @@
+{
+  "experiment": {
+    "experimentId": "d0e2abeb-9158-4984-bb18-007586301e6d",
+    "timestamp": "2026-10-05T01:03:31.619Z",
+    "host": {
+      "resultClass": "HOST_REFERENCE",
+      "platform": "win32",
+      "arch": "x64",
+      "osRelease": "10.0.26200",
+      "cpuModel": "AMD Ryzen 9 4900HS with Radeon Graphics         ",
+      "cpuCount": 16,
+      "totalMemoryBytes": 16556589056,
+      "nodeVersion": "v25.6.1",
+      "gitCommit": "97f03c25f5f32b09d30bfe79db8d050ed6691b79",
+      "capturedAt": "2026-10-05T01:03:31.645Z"
+    }
+  },
+  "paramSet": "N4096",
+  "trialsPerFleetSize": 5,
+  "featureFields": [
+    "altitudeM",
+    "speedMps",
+    "vibrationMm2s",
+    "temperatureC",
+    "batteryPct",
+    "infraAnomalyScore"
+  ],
+  "results": [
+    {
+      "fleetSize": 1,
+      "plaintext": {
+        "latencyMs": 0.0039,
+        "bytes": 48,
+        "mean": [
+          77.87070104849784,
+          2.9837039443212316,
+          2.1820269735223494,
+          28.006935690259915,
+          100.30701075130605,
+          0.017265876069924857
+        ]
+      },
+      "ckks": {
+        "encryptAllMs": 2.5588,
+        "encryptCriticalPathMs": 4.9102,
+        "aggregateMs": 0.0007,
+        "decryptDecodeMs": 0.5653,
+        "totalMs": 5.4761999999999995,
+        "bytes": 131185,
+        "mean": [
+          77.87070793940882,
+          2.9837396384742805,
+          2.1820407967196562,
+          28.00695042289024,
+          100.30704028642667,
+          0.01729910737609147
+        ],
+        "maxAbsErrorVsPlaintext": 0.000035694153048826394
+      }
+    },
+    {
+      "fleetSize": 5,
+      "plaintext": {
+        "latencyMs": 0.0043,
+        "bytes": 240,
+        "mean": [
+          80.4480909268494,
+          2.989727676817279,
+          2.1843227046748632,
+          24.373583785358278,
+          100.3239750834658,
+          0.02514016903607664
+        ]
+      },
+      "ckks": {
+        "encryptAllMs": 11.285,
+        "encryptCriticalPathMs": 2.2868,
+        "aggregateMs": 0.2138,
+        "decryptDecodeMs": 0.5506,
+        "totalMs": 3.0511999999999997,
+        "bytes": 655925,
+        "mean": [
+          80.44809105249814,
+          2.989717456789277,
+          2.1843225700237854,
+          24.37356844209208,
+          100.32396672334148,
+          0.02514275150714424
+        ],
+        "maxAbsErrorVsPlaintext": 0.000015343266198897254
+      }
+    },
+    {
+      "fleetSize": 10,
+      "plaintext": {
+        "latencyMs": 0.0059,
+        "bytes": 480,
+        "mean": [
+          79.3305673718987,
+          3.0780977185522636,
+          2.1881668742867677,
+          24.881919051487213,
+          100.11664643663073,
+          0.017943642472125623
+        ]
+      },
+      "ckks": {
+        "encryptAllMs": 22.3073,
+        "encryptCriticalPathMs": 2.2064,
+        "aggregateMs": 0.7917,
+        "decryptDecodeMs": 0.5831,
+        "totalMs": 3.5812,
+        "bytes": 1311850,
+        "mean": [
+          79.33057325570664,
+          3.078091854942566,
+          2.18816620012998,
+          24.88192567316935,
+          100.11665037007197,
+          0.017934619790019986
+        ],
+        "maxAbsErrorVsPlaintext": 0.000009022682105636753
+      }
+    },
+    {
+      "fleetSize": 25,
+      "plaintext": {
+        "latencyMs": 0.013,
+        "bytes": 1200,
+        "mean": [
+          79.70926340156048,
+          3.0149095362767797,
+          2.4824347820618287,
+          24.440809464906657,
+          99.98287345900503,
+          0.024743737198395305
+        ]
+      },
+      "ckks": {
+        "encryptAllMs": 55.745,
+        "encryptCriticalPathMs": 2.2138,
+        "aggregateMs": 0.8779,
+        "decryptDecodeMs": 0.5527,
+        "totalMs": 3.6444,
+        "bytes": 3279625,
+        "mean": [
+          79.70926784581201,
+          3.014913016176572,
+          2.482434356946786,
+          24.440812803539483,
+          99.98288662377186,
+          0.024736838639434246
+        ],
+        "maxAbsErrorVsPlaintext": 0.000013164766826889718
+      }
+    },
+    {
+      "fleetSize": 50,
+      "plaintext": {
+        "latencyMs": 0.0153,
+        "bytes": 2400,
+        "mean": [
+          79.71470009561688,
+          3.025640414108115,
+          2.534917920767069,
+          24.302044291129704,
+          100.05015386575865,
+          0.024124032309479744
+        ]
+      },
+      "ckks": {
+        "encryptAllMs": 112.5198,
+        "encryptCriticalPathMs": 2.2125,
+        "aggregateMs": 1.8246,
+        "decryptDecodeMs": 0.5272,
+        "totalMs": 4.564299999999999,
+        "bytes": 6559250,
+        "mean": [
+          79.71470221493296,
+          3.02564206199227,
+          2.53491497751643,
+          24.30204329752949,
+          100.0501649993318,
+          0.024121160924827106
+        ],
+        "maxAbsErrorVsPlaintext": 0.000011133573153188081
+      }
+    }
+  ]
+}

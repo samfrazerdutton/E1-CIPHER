@@ -1,0 +1,16 @@
+n,kernel,meanMs,stdDevMs
+1024,modMulNaive,0.0461,0.1242
+1024,modMulMontgomery,0.5493,0.0908
+1024,nttForward,0.4090,0.2030
+2048,modMulNaive,0.0287,0.0538
+2048,modMulMontgomery,1.0864,0.1413
+2048,nttForward,0.3940,0.0744
+4096,modMulNaive,0.0631,0.1389
+4096,modMulMontgomery,1.8312,0.4613
+4096,nttForward,0.8632,0.1053
+8192,modMulNaive,0.1575,0.3057
+8192,modMulMontgomery,2.9171,0.3320
+8192,nttForward,1.7924,0.1495
+16384,modMulNaive,0.2618,0.3811
+16384,modMulMontgomery,6.6898,1.5724
+16384,nttForward,4.3896,0.6308
