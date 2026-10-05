@@ -37,7 +37,7 @@ const ASSET_DESCRIPTIONS: Record<string, string> = {
   'apps/fleet': 'Plaintext-vs-CKKS fleet aggregation comparison across 5 fleet sizes.',
   'apps/demo': 'The end-to-end "killer demo" narrative (confidential fleet anomaly response).',
   'apps/redteam': 'Defensive red-team demonstration: network intercept, compromised cloud, compromised drone.',
-  'apps/dashboard': 'Separate Vite+React sub-project: browser visualization of this repo\'s real results/*.json artifacts. Own package.json/tsconfig/build — not scanned as part of this repo\'s CLI attack surface.',
+  'apps/dashboard': 'Separate Vite+React sub-project: browser visualization of this repo\'s real results/*.json artifacts, plus one live view that imports lib/telemetry and lib/policy directly into the browser bundle. Own package.json/tsconfig/build — not scanned as part of this repo\'s CLI attack surface.',
   'tools/bench': 'CKKS operation and kernel micro-benchmark suites.',
   'tools/security': 'Security manifest, SBOM, and CRA evidence generator CLIs.',
   'docs': 'Human-readable threat model, bottleneck report, and this evidence set.',

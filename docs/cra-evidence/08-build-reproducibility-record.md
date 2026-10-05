@@ -1,10 +1,10 @@
 # Build / Reproducibility Record
 
-- Git commit: `263fa0f8938df775bd631bd00fd1590e1bcc6a87`
+- Git commit: `864bb08330182b3a620d78b31dac18aea4e29ed4`
 - Node version: `v25.6.1`
 - Platform: `win32-x64`
 - `package-lock.json` SHA-256: `6b4996d753e963f30de7d75af490dbe7dafd753a3de39dd6737f335f6df5d341`
-- Generated: 2026-10-05T01:42:39.121Z
+- Generated: 2026-10-05T17:19:55.528Z
 
 ## Reproduction
 

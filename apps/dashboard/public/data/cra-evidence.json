@@ -2,9 +2,9 @@
   "manifest": {
     "product": "e1-cipher",
     "version": "0.1.0",
-    "generatedAt": "2026-10-05T01:42:39.121Z",
+    "generatedAt": "2026-10-05T17:19:55.528Z",
     "build": {
-      "gitCommit": "263fa0f8938df775bd631bd00fd1590e1bcc6a87",
+      "gitCommit": "864bb08330182b3a620d78b31dac18aea4e29ed4",
       "nodeVersion": "v25.6.1",
       "platform": "win32-x64",
       "packageLockHashSha256": "6b4996d753e963f30de7d75af490dbe7dafd753a3de39dd6737f335f6df5d341"
@@ -204,7 +204,7 @@
     {
       "path": "apps/dashboard",
       "kind": "application",
-      "description": "Separate Vite+React sub-project: browser visualization of this repo's real results/*.json artifacts. Own package.json/tsconfig/build — not scanned as part of this repo's CLI attack surface."
+      "description": "Separate Vite+React sub-project: browser visualization of this repo's real results/*.json artifacts, plus one live view that imports lib/telemetry and lib/policy directly into the browser bundle. Own package.json/tsconfig/build — not scanned as part of this repo's CLI attack surface."
     },
     {
       "path": "tools/bench",
@@ -260,7 +260,7 @@
     }
   ],
   "vulnReport": {
-    "generatedAt": "2026-10-05T01:42:40.640Z",
+    "generatedAt": "2026-10-05T17:19:57.389Z",
     "tool": "npm audit (via this repo's own package-lock.json)",
     "totalsBySeverity": {
       "info": 0,
@@ -274,7 +274,7 @@
     "rawExitCode": 0
   },
   "testRun": {
-    "generatedAt": "2026-10-05T01:42:41.448Z",
+    "generatedAt": "2026-10-05T17:19:58.280Z",
     "command": "npm test",
     "passed": true,
     "summary": "ℹ pass 3"

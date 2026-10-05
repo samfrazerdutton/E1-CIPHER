@@ -1,0 +1,38 @@
+.wrap {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.svgBox {
+  background: var(--surface-raised);
+  border-radius: 4px;
+  flex: none;
+}
+
+.drone {
+  cursor: pointer;
+  stroke: var(--plane);
+  stroke-width: 1;
+}
+
+.droneSelected {
+  stroke: var(--ink-primary);
+  stroke-width: 2;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: var(--ink-muted);
+}
+
+.ramp {
+  width: 100px;
+  height: 8px;
+  border-radius: 2px;
+  background: linear-gradient(to right, rgb(205, 226, 251), rgb(13, 54, 107));
+}

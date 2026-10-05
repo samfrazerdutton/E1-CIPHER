@@ -1,1 +1,1 @@
-export type ViewId = 'crypto' | 'research' | 'fleet' | 'mission' | 'confidentiality' | 'security' | 'platform';
+export type ViewId = 'crypto' | 'research' | 'fleet' | 'mission' | 'simulator' | 'confidentiality' | 'security' | 'platform';

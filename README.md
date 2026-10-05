@@ -393,9 +393,15 @@ secretly faked:
   but not exact comparison/argmax without expensive polynomial
   approximation; `apps/demo/killer-demo.ts` documents the local-self-select
   design this constraint led to, rather than hand-waving past it.
-- A true interactive 3D fleet simulator — see [Dashboard](#dashboard) below
-  for what the browser layer actually is instead (a visualization of this
-  repo's real recorded results, not a live steerable simulation).
+- A true interactive **3D** fleet simulator with terrain, comm-link
+  visualization, and live attack injection (compromise-a-drone /
+  compromise-the-cloud toggles) — see [Dashboard](#dashboard)'s SIMULATOR
+  view for what was actually built instead: a live 2D fleet map and policy-
+  engine panel, steerable in real time, running this repo's own
+  `lib/telemetry`/`lib/policy` code unmodified in the browser. That is a
+  genuinely live simulation of telemetry and policy logic — it is not 3D,
+  has no terrain/comm-link rendering, and does not run CKKS encryption
+  client-side.
 
 ## Reproduction
 
@@ -422,10 +428,11 @@ info) per [Benchmark Methodology](#benchmark-methodology).
 
 `apps/dashboard` is a Vite + React, dark-engineering-aesthetic browser
 dashboard (see project brief section 23's "Apple hardware engineering /
-NVIDIA developer tooling / Palantir operational interface" direction). It
-is a **visualization layer over this repo's real `results/*.json`
-artifacts** — it reads them, it does not simulate new numbers to look
-busy. Views:
+NVIDIA developer tooling / Palantir operational interface" direction).
+Most of it is a **visualization layer over this repo's real
+`results/*.json` artifacts** — it reads them, it does not simulate new
+numbers to look busy. One view is a genuine exception — see SIMULATOR
+below. Views:
 
 - **CRYPTO** — the CKKS per-operation latency table and bottleneck
   breakdown from `results/ckks-bench-latest.json`, plus the Montgomery-vs-
@@ -434,6 +441,16 @@ busy. Views:
   sizes from `results/fleet-aggregation-compare-latest.json`.
 - **MISSION** — the killer-demo narrative and its real decrypted fleet-mean
   / self-selection outcome from `results/killer-demo-latest.json`.
+- **SIMULATOR** — the one *live* view: it imports `lib/telemetry/generator.ts`
+  and `lib/policy/scheduler.ts` directly (Vite/esbuild bundles them
+  unmodified from outside the app's own directory — verified at build time,
+  not just type-checked) and runs them in the browser. Moving the fleet-
+  size/tick/scenario/mission-priority/latency-budget controls regenerates
+  the fleet and recomputes the policy decision live, in this tab — it is
+  not a replay of a recorded run. It deliberately does not run CKKS
+  encryption client-side (that would mean shipping node-seal's WASM build
+  for a demo that adds little over the real benchmark already in
+  FLEET/MISSION); its fleet-mean readout is a plain average, labeled as such.
 - **CONFIDENTIALITY** — the red-team intercept demo's entropy-by-word-
   offset breakdown from `results/redteam-intercept-demo-latest.json`.
 - **SECURITY / CRA EVIDENCE** — the threat register and the CRA evidence
@@ -443,10 +460,10 @@ busy. Views:
   available (no E1 hardware, no power instrumentation, no effcc toolchain)
   rather than filling the space with invented numbers.
 
-Run it with `cd apps/dashboard && npm install && npm run dev`. It expects
-the `results/*.json` files described above to exist — run the
-`npm run bench:*` / `demo:*` / `redteam:*` / `security:*` commands first
-(or just use the ones already committed in `results/`).
+Run it with `cd apps/dashboard && npm install && npm run dev`. The
+non-SIMULATOR views expect the `results/*.json` files described above to
+exist — run the `npm run bench:*` / `demo:*` / `redteam:*` / `security:*`
+commands first (or just use the ones already committed in `results/`).
 
 ## Future Work
 

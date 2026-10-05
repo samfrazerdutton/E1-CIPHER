@@ -14,7 +14,7 @@ _Generated from the actual repository file tree — not a template. Regenerate w
 | `apps/fleet` | application | Plaintext-vs-CKKS fleet aggregation comparison across 5 fleet sizes. |
 | `apps/demo` | application | The end-to-end "killer demo" narrative (confidential fleet anomaly response). |
 | `apps/redteam` | application | Defensive red-team demonstration: network intercept, compromised cloud, compromised drone. |
-| `apps/dashboard` | application | Separate Vite+React sub-project: browser visualization of this repo's real results/*.json artifacts. Own package.json/tsconfig/build — not scanned as part of this repo's CLI attack surface. |
+| `apps/dashboard` | application | Separate Vite+React sub-project: browser visualization of this repo's real results/*.json artifacts, plus one live view that imports lib/telemetry and lib/policy directly into the browser bundle. Own package.json/tsconfig/build — not scanned as part of this repo's CLI attack surface. |
 | `tools/bench` | tool | CKKS operation and kernel micro-benchmark suites. |
 | `tools/security` | tool | Security manifest, SBOM, and CRA evidence generator CLIs. |
 | `docs` | documentation | Human-readable threat model, bottleneck report, and this evidence set. |

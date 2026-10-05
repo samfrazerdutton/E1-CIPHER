@@ -5,6 +5,7 @@ import { CryptoView } from './views/CryptoView';
 import { ResearchView } from './views/ResearchView';
 import { FleetView } from './views/FleetView';
 import { MissionView } from './views/MissionView';
+import { SimulatorView } from './views/SimulatorView';
 import { ConfidentialityView } from './views/ConfidentialityView';
 import { SecurityView } from './views/SecurityView';
 import { PlatformView } from './views/PlatformView';
@@ -14,6 +15,7 @@ const VIEWS: Record<ViewId, () => React.ReactElement> = {
   research: ResearchView,
   fleet: FleetView,
   mission: MissionView,
+  simulator: SimulatorView,
   confidentiality: ConfidentialityView,
   security: SecurityView,
   platform: PlatformView,

@@ -6,6 +6,7 @@ const ITEMS: { id: ViewId; code: string; label: string }[] = [
   { id: 'research', code: 'RS', label: 'Research' },
   { id: 'fleet', code: 'FL', label: 'Fleet' },
   { id: 'mission', code: 'MI', label: 'Mission' },
+  { id: 'simulator', code: 'SI', label: 'Simulator' },
   { id: 'confidentiality', code: 'CO', label: 'Confidentiality' },
   { id: 'security', code: 'SE', label: 'Security & CRA' },
   { id: 'platform', code: 'PL', label: 'Platform limits' },
