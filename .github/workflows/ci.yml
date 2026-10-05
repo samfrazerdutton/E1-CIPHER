@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  cpp-build-and-test:
+    name: C++ build, test, SBOM smoke (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+
+      - name: Configure (Release)
+        run: cmake -G Ninja -DCMAKE_BUILD_TYPE=Release -B build .
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Test (CTest)
+        run: ctest --test-dir build --output-on-failure
+
+      - name: Run the security gate
+        run: ./build/apps/e1cipher security
+
+      - name: Run the platform report
+        run: ./build/apps/e1cipher platform
+
+      - name: Smoke-run the flagship demo
+        run: ./build/apps/e1cipher inspect --drones 5
+
+  cpp-sanitizers:
+    name: C++ ASan + UBSan (Linux)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y ninja-build
+
+      - name: Configure (sanitizers)
+        run: cmake -G Ninja -DCMAKE_BUILD_TYPE=RelWithDebInfo -DE1CIPHER_SANITIZER=address-undefined -B build-asan .
+
+      - name: Build
+        run: cmake --build build-asan -j
+
+      - name: Test under sanitizers
+        run: ctest --test-dir build-asan --output-on-failure
+
+  cpp-format:
+    name: clang-format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check formatting
+        run: |
+          FILES=$(find include src platform apps benchmarks tests -type f \( -name "*.cpp" -o -name "*.hpp" \))
+          clang-format --dry-run --Werror $FILES
+
+  node-tooling:
+    name: Node tooling (security evidence, kernel tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - run: npm run bench:kernels
+      - run: npm run security:manifest
+      - run: npm run security:evidence
+
+  dashboard-build:
+    name: Dashboard build
+    runs-on: ubuntu-latest
+    needs: node-tooling
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+        working-directory: apps/dashboard
+      - run: npm run build
+        working-directory: apps/dashboard
+
+# No hardware-dependent job runs here: there is no E1 runner, so no step
+# attempts -DTARGET_E1=ON (it would fail cmake/FindE1Toolchain.cmake's
+# explicit check anyway -- see that file).

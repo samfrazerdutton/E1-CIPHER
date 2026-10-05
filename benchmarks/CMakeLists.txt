@@ -1,0 +1,9 @@
+add_executable(ckks_bench crypto/ckks_bench.cpp)
+target_link_libraries(ckks_bench PRIVATE e1cipher_core)
+e1cipher_set_warnings(ckks_bench)
+e1cipher_apply_sanitizers(ckks_bench)
+
+add_executable(kernel_bench kernels/kernel_bench.cpp)
+target_link_libraries(kernel_bench PRIVATE e1cipher_core)
+e1cipher_set_warnings(kernel_bench)
+e1cipher_apply_sanitizers(kernel_bench)

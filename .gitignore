@@ -2,3 +2,14 @@ node_modules/
 dist/
 *.log
 .DS_Store
+
+# CMake build directories (not vendored -- see CMakeLists.txt's
+# FetchContent for SEAL/doctest, fetched fresh per build tree)
+build/
+build-*/
+CMakeFiles/
+CMakeCache.txt
+compile_commands.json
+*.obj
+*.pdb
+*.ilk

@@ -1,0 +1,129 @@
+# Machine-readable security control traceability (project brief section
+# 25). Every `test` path below is a real file in this repo; every
+# `evidence` path is produced by actually running that test or tool --
+# none of this is aspirational. `status: VERIFIED` means the referenced
+# test currently passes on this host (see README.md "Reproduction"); it
+# does NOT mean the control has been independently audited.
+
+controls:
+  - id: E1C-SEC-001
+    description: >
+      Sensitive (CONFIDENTIAL/AGGREGATABLE) telemetry must not leave the
+      device without encryption.
+    requirement: Fail-closed data classification and placement.
+    implementation: src/policy/scheduler.cpp (decide_placement)
+    test: tests/security/test_fail_closed.cpp
+    evidence: Run via `ctest -R test_fail_closed` or `e1cipher security`.
+    status: VERIFIED
+
+  - id: E1C-SEC-002
+    description: >
+      An unrecognized (uncataloged) data type must be blocked, never
+      guessed at or defaulted to a permissive placement.
+    requirement: Fail-closed classification lookup.
+    implementation: src/policy/classification.cpp (lookup_baseline),
+      src/policy/scheduler.cpp
+    test: tests/security/test_fail_closed.cpp ("unknown classification
+      fails closed")
+    evidence: Run via `ctest -R test_fail_closed`.
+    status: VERIFIED
+
+  - id: E1C-SEC-003
+    description: >
+      CONFIDENTIAL/AGGREGATABLE data must be blocked (never silently sent
+      plaintext) if no crypto backend is available.
+    requirement: Fail-closed crypto-availability check.
+    implementation: src/policy/scheduler.cpp (CryptoAvailability::Unavailable
+      branch)
+    test: tests/security/test_fail_closed.cpp ("no available crypto
+      backend fails closed")
+    evidence: Run via `ctest -R test_fail_closed`.
+    status: VERIFIED
+
+  - id: E1C-SEC-004
+    description: LOCAL_ONLY data must never transmit, regardless of
+      battery/network/mission-priority inputs.
+    requirement: LOCAL_ONLY is an unconditional terminal state.
+    implementation: src/policy/scheduler.cpp
+    test: tests/unit/test_policy.cpp, tests/security/test_fail_closed.cpp
+    evidence: Run via `ctest -R test_policy` / `ctest -R test_fail_closed`.
+    status: VERIFIED
+
+  - id: E1C-SEC-005
+    description: The fleet gateway role must never construct a SecretKey
+      or Decryptor.
+    requirement: Structural key-custody separation (not policy-only).
+    implementation: apps/fleet_gateway/fleet.cpp
+    test: Manual code inspection (see fleet.hpp's doc comment); no
+      automated test currently enforces this at the type level.
+    evidence: Read apps/fleet_gateway/fleet.cpp -- the only
+      CkksBackend::create() call in the gateway/analysis-endpoint demo is
+      labeled "analysis endpoint role," and no SecretKey symbol appears in
+      fleet.cpp outside that backend's internals.
+    status: PARTIALLY_VERIFIED
+    notes: Verified by inspection, not by an automated architectural test
+      (e.g. a lint rule banning seal::SecretKey/Decryptor outside
+      ckks_backend.cpp). That automated check is listed as future work.
+
+  - id: E1C-SEC-006
+    description: CKKS round-trip (encrypt/decrypt) accuracy must stay
+      within a documented tolerance for the parameter sets this project
+      uses.
+    requirement: Cryptographic correctness regression test.
+    implementation: src/crypto/ckks_backend.cpp
+    test: tests/unit/test_crypto_roundtrip.cpp
+    evidence: Run via `ctest -R test_crypto_roundtrip`.
+    status: VERIFIED
+
+  - id: E1C-SEC-007
+    description: A parameter set with no key-switching support (N1024)
+      must be reported as such, not crash or silently produce wrong
+      results.
+    requirement: Explicit unsupported-operation reporting.
+    implementation: include/e1cipher/crypto/ckks_backend.hpp
+      (supports_key_switching), benchmarks/crypto/ckks_bench.cpp
+    test: tests/unit/test_crypto_roundtrip.cpp ("CkksBackend::create fails
+      cleanly for a parameter set with no key-switching")
+    evidence: Run via `ctest -R test_crypto_roundtrip`, or
+      `./build/benchmarks/ckks_bench` (prints "N/A" rows for N1024).
+    status: VERIFIED
+
+  - id: E1C-SEC-008
+    description: No E1 hardware/performance/power number may be fabricated;
+      every result must be labeled with its real provenance.
+    requirement: ResultClass labeling discipline.
+    implementation: include/e1cipher/platform/result_class.hpp,
+      include/e1cipher/platform/e1_platform.hpp
+    test: No automated test (this is a code-review/process control, not a
+      runtime-checkable one).
+    evidence: platform/e1/e1_platform.cpp's run_kernel() always returns
+      ResultClass::NotMeasured; grep the repo for ResultClass::RealHardware
+      or ::Simulated -- neither is constructed anywhere.
+    status: VERIFIED
+    notes: Verified by inspection (grep), not a unit test -- there is
+      nothing to unit-test about an absence of fabricated data short of
+      a static-analysis rule, which is not implemented.
+
+  - id: E1C-SEC-009
+    description: Dependency/vulnerability scanning for the project's
+      npm-based tooling layer.
+    requirement: Regular dependency vulnerability scanning.
+    implementation: tools/security/generate-evidence.ts
+      (runVulnerabilityScan)
+    test: N/A (a scan, not a pass/fail test)
+    evidence: results/cra-evidence.json's vulnReport field; regenerate
+      with `npm run security:evidence`.
+    status: PARTIALLY_IMPLEMENTED
+    notes: Covers the Node tooling dependency tree only. The C++
+      dependency tree (SEAL, msgsl, doctest) is NOT scanned by any tool in
+      this repository -- see docs/compliance/cra-mapping.md.
+
+  - id: E1C-SEC-010
+    description: Build provenance (commit, compiler, platform) must be
+      recoverable from any build artifact or running binary.
+    requirement: Build/reproducibility metadata.
+    implementation: CMakeLists.txt (E1CIPHER_GIT_COMMIT),
+      src/diagnostics/platform_report.cpp
+    test: No automated test; verified by running the tool.
+    evidence: Run `e1cipher platform`.
+    status: VERIFIED

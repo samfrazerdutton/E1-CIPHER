@@ -1,0 +1,105 @@
+{
+  "host": {
+    "cpuModel": "AMD Ryzen 9 4900HS with Radeon Graphics         ",
+    "compiler": "Clang 22.1.0 (https://github.com/llvm/llvm-project 4434dabb69916856b824f68a64b029c67175e532)",
+    "gitCommit": "b52a52e333a18f016470ceb9fd7e55d2e57adaab",
+    "resultClass": "HOST_REFERENCE"
+  },
+  "results": [
+    {
+      "id": "N1024",
+      "parametersSet": true,
+      "maxBitsAt128": 27,
+      "slotCount": 512,
+      "ciphertextBytes": 16497,
+      "roundtripMaxAbsErr": 0.0117381,
+      "ops": {
+        "add": { "meanMs": 0.00153, "medianMs": 0.0015, "stdDevMs": 4.58258e-05 },
+        "decode": { "meanMs": 0.0157833, "medianMs": 0.0156, "stdDevMs": 0.000843439 },
+        "decrypt": { "meanMs": 0.00356, "medianMs": 0.0036, "stdDevMs": 4.89898e-05 },
+        "encode": { "meanMs": 0.02008, "medianMs": 0.02, "stdDevMs": 0.000370045 },
+        "encrypt": { "meanMs": 0.16886, "medianMs": 0.168, "stdDevMs": 0.0031845 },
+        "multiply": { "supported": false, "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated." },
+        "relinearize": { "supported": false, "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated." },
+        "rescale": { "supported": false, "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated." },
+        "rotate": { "supported": false, "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated." }
+      }
+    },
+    {
+      "id": "N2048",
+      "parametersSet": true,
+      "maxBitsAt128": 54,
+      "slotCount": 1024,
+      "ciphertextBytes": 65649,
+      "roundtripMaxAbsErr": 0.0290272,
+      "ops": {
+        "add": { "meanMs": 0.00577333, "medianMs": 0.0058, "stdDevMs": 4.42217e-05 },
+        "decode": { "meanMs": 0.104903, "medianMs": 0.1045, "stdDevMs": 0.00111877 },
+        "decrypt": { "meanMs": 0.0138033, "medianMs": 0.0138, "stdDevMs": 6.04612e-05 },
+        "encode": { "meanMs": 0.0705567, "medianMs": 0.069, "stdDevMs": 0.00375417 },
+        "encrypt": { "meanMs": 0.6049, "medianMs": 0.5946, "stdDevMs": 0.0388105 },
+        "multiply": { "meanMs": 0.0428667, "medianMs": 0.0426, "stdDevMs": 0.000875722 },
+        "relinearize": { "meanMs": 0.28904, "medianMs": 0.2877, "stdDevMs": 0.00253884 },
+        "rescale": { "meanMs": 0.361853, "medianMs": 0.3572, "stdDevMs": 0.022499 },
+        "rotate": { "meanMs": 0.25255, "medianMs": 0.2519, "stdDevMs": 0.00228499 }
+      }
+    },
+    {
+      "id": "N4096",
+      "parametersSet": true,
+      "maxBitsAt128": 109,
+      "slotCount": 2048,
+      "ciphertextBytes": 131185,
+      "roundtripMaxAbsErr": 0.00026901,
+      "ops": {
+        "add": { "meanMs": 0.0112133, "medianMs": 0.0112, "stdDevMs": 8.84433e-05 },
+        "decode": { "meanMs": 0.221753, "medianMs": 0.2188, "stdDevMs": 0.00932036 },
+        "decrypt": { "meanMs": 0.0271267, "medianMs": 0.0271, "stdDevMs": 8.5375e-05 },
+        "encode": { "meanMs": 0.148917, "medianMs": 0.1483, "stdDevMs": 0.00211866 },
+        "encrypt": { "meanMs": 1.22712, "medianMs": 1.2207, "stdDevMs": 0.0221477 },
+        "multiply": { "meanMs": 0.0854867, "medianMs": 0.0852, "stdDevMs": 0.000944363 },
+        "relinearize": { "meanMs": 0.6171, "medianMs": 0.6102, "stdDevMs": 0.0276318 },
+        "rescale": { "meanMs": 0.76816, "medianMs": 0.7622, "stdDevMs": 0.0176633 },
+        "rotate": { "meanMs": 0.53805, "medianMs": 0.5356, "stdDevMs": 0.0109625 }
+      }
+    },
+    {
+      "id": "N8192",
+      "parametersSet": true,
+      "maxBitsAt128": 218,
+      "slotCount": 4096,
+      "ciphertextBytes": 393329,
+      "roundtripMaxAbsErr": 1.17405e-07,
+      "ops": {
+        "add": { "meanMs": 0.0369767, "medianMs": 0.0362, "stdDevMs": 0.00225739 },
+        "decode": { "meanMs": 0.76885, "medianMs": 0.7065, "stdDevMs": 0.239536 },
+        "decrypt": { "meanMs": 0.08333, "medianMs": 0.0821, "stdDevMs": 0.00314793 },
+        "encode": { "meanMs": 0.44167, "medianMs": 0.4398, "stdDevMs": 0.00438825 },
+        "encrypt": { "meanMs": 3.11973, "medianMs": 3.1035, "stdDevMs": 0.0710642 },
+        "multiply": { "meanMs": 0.26541, "medianMs": 0.2615, "stdDevMs": 0.00971811 },
+        "relinearize": { "meanMs": 2.2447, "medianMs": 2.2311, "stdDevMs": 0.0704773 },
+        "rescale": { "meanMs": 2.74297, "medianMs": 2.7163, "stdDevMs": 0.0939186 },
+        "rotate": { "meanMs": 1.95233, "medianMs": 1.9319, "stdDevMs": 0.0687467 }
+      }
+    },
+    {
+      "id": "N16384",
+      "parametersSet": true,
+      "maxBitsAt128": 438,
+      "slotCount": 8192,
+      "ciphertextBytes": 1572977,
+      "roundtripMaxAbsErr": 2.27447e-10,
+      "ops": {
+        "add": { "meanMs": 0.188467, "medianMs": 0.1781, "stdDevMs": 0.0197776 },
+        "decode": { "meanMs": 3.32265, "medianMs": 3.3175, "stdDevMs": 0.057818 },
+        "decrypt": { "meanMs": 0.34934, "medianMs": 0.3391, "stdDevMs": 0.0287234 },
+        "encode": { "meanMs": 1.62079, "medianMs": 1.6085, "stdDevMs": 0.0472069 },
+        "encrypt": { "meanMs": 10.1347, "medianMs": 10.1179, "stdDevMs": 0.198494 },
+        "multiply": { "meanMs": 1.45819, "medianMs": 1.399, "stdDevMs": 0.188056 },
+        "relinearize": { "meanMs": 12.6569, "medianMs": 12.5457, "stdDevMs": 0.35833 },
+        "rescale": { "meanMs": 14.9647, "medianMs": 14.9791, "stdDevMs": 0.265942 },
+        "rotate": { "meanMs": 11.6354, "medianMs": 11.4934, "stdDevMs": 0.425913 }
+      }
+    }
+  ]
+}
