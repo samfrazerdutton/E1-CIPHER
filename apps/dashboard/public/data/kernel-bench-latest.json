@@ -1,0 +1,177 @@
+{
+  "experiment": {
+    "experimentId": "5718e865-f858-452e-92c4-57df2d227bda",
+    "timestamp": "2026-10-05T01:03:29.315Z",
+    "host": {
+      "resultClass": "HOST_REFERENCE",
+      "platform": "win32",
+      "arch": "x64",
+      "osRelease": "10.0.26200",
+      "cpuModel": "AMD Ryzen 9 4900HS with Radeon Graphics         ",
+      "cpuCount": 16,
+      "totalMemoryBytes": 16556589056,
+      "nodeVersion": "v25.6.1",
+      "gitCommit": "97f03c25f5f32b09d30bfe79db8d050ed6691b79",
+      "capturedAt": "2026-10-05T01:03:29.341Z"
+    }
+  },
+  "trialsPerOp": 20,
+  "nttPrime": "998244353",
+  "results": [
+    {
+      "n": 1024,
+      "modMulNaive": {
+        "trials": 20,
+        "meanMs": 0.04611000000000002,
+        "medianMs": 0.0156,
+        "stdDevMs": 0.12422353601471825,
+        "minMs": 0.0147,
+        "maxMs": 0.5872
+      },
+      "modMulMont": {
+        "trials": 20,
+        "meanMs": 0.54932,
+        "medianMs": 0.5278,
+        "stdDevMs": 0.09078976594308412,
+        "minMs": 0.4691,
+        "maxMs": 0.8431
+      },
+      "nttForward": {
+        "trials": 20,
+        "meanMs": 0.4089850000000001,
+        "medianMs": 0.4377,
+        "stdDevMs": 0.2029906507083516,
+        "minMs": 0.1652,
+        "maxMs": 0.8274
+      },
+      "nttStats": {
+        "butterflyOps": 5120,
+        "stages": 10
+      }
+    },
+    {
+      "n": 2048,
+      "modMulNaive": {
+        "trials": 20,
+        "meanMs": 0.028739999999999998,
+        "medianMs": 0.0155,
+        "stdDevMs": 0.05380582124640419,
+        "minMs": 0.0148,
+        "maxMs": 0.263
+      },
+      "modMulMont": {
+        "trials": 20,
+        "meanMs": 1.08641,
+        "medianMs": 1.1052,
+        "stdDevMs": 0.14131169059918575,
+        "minMs": 0.9317,
+        "maxMs": 1.3883
+      },
+      "nttForward": {
+        "trials": 20,
+        "meanMs": 0.39401499999999995,
+        "medianMs": 0.3557,
+        "stdDevMs": 0.07440017657909152,
+        "minMs": 0.3282,
+        "maxMs": 0.5352
+      },
+      "nttStats": {
+        "butterflyOps": 11264,
+        "stages": 11
+      }
+    },
+    {
+      "n": 4096,
+      "modMulNaive": {
+        "trials": 20,
+        "meanMs": 0.06315,
+        "medianMs": 0.0307,
+        "stdDevMs": 0.1389252370881547,
+        "minMs": 0.0294,
+        "maxMs": 0.6686
+      },
+      "modMulMont": {
+        "trials": 20,
+        "meanMs": 1.8312000000000004,
+        "medianMs": 1.956,
+        "stdDevMs": 0.46130396920035277,
+        "minMs": 1.2761,
+        "maxMs": 2.7012
+      },
+      "nttForward": {
+        "trials": 20,
+        "meanMs": 0.8632350000000001,
+        "medianMs": 0.7841,
+        "stdDevMs": 0.10528861417551283,
+        "minMs": 0.76,
+        "maxMs": 1.0477
+      },
+      "nttStats": {
+        "butterflyOps": 24576,
+        "stages": 12
+      }
+    },
+    {
+      "n": 8192,
+      "modMulNaive": {
+        "trials": 20,
+        "meanMs": 0.15747999999999998,
+        "medianMs": 0.0618,
+        "stdDevMs": 0.30572745313432353,
+        "minMs": 0.0603,
+        "maxMs": 1.3648
+      },
+      "modMulMont": {
+        "trials": 20,
+        "meanMs": 2.9171000000000005,
+        "medianMs": 2.9067,
+        "stdDevMs": 0.3320253725244503,
+        "minMs": 2.5618,
+        "maxMs": 3.6747
+      },
+      "nttForward": {
+        "trials": 20,
+        "meanMs": 1.7923949999999997,
+        "medianMs": 1.7027,
+        "stdDevMs": 0.14947648134405625,
+        "minMs": 1.6094,
+        "maxMs": 2.0187
+      },
+      "nttStats": {
+        "butterflyOps": 53248,
+        "stages": 13
+      }
+    },
+    {
+      "n": 16384,
+      "modMulNaive": {
+        "trials": 20,
+        "meanMs": 0.261785,
+        "medianMs": 0.1554,
+        "stdDevMs": 0.38111090023115324,
+        "minMs": 0.1475,
+        "maxMs": 1.9147
+      },
+      "modMulMont": {
+        "trials": 20,
+        "meanMs": 6.689794999999999,
+        "medianMs": 6.1845,
+        "stdDevMs": 1.5724377982848796,
+        "minMs": 5.2625,
+        "maxMs": 11.2488
+      },
+      "nttForward": {
+        "trials": 20,
+        "meanMs": 4.389635,
+        "medianMs": 4.0201,
+        "stdDevMs": 0.6307746247868568,
+        "minMs": 3.7164,
+        "maxMs": 5.3924
+      },
+      "nttStats": {
+        "butterflyOps": 114688,
+        "stages": 14
+      }
+    }
+  ]
+}

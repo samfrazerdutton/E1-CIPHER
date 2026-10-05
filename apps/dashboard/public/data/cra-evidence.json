@@ -1,0 +1,282 @@
+{
+  "manifest": {
+    "product": "e1-cipher",
+    "version": "0.1.0",
+    "generatedAt": "2026-10-05T01:42:39.121Z",
+    "build": {
+      "gitCommit": "263fa0f8938df775bd631bd00fd1590e1bcc6a87",
+      "nodeVersion": "v25.6.1",
+      "platform": "win32-x64",
+      "packageLockHashSha256": "6b4996d753e963f30de7d75af490dbe7dafd753a3de39dd6737f335f6df5d341"
+    },
+    "cryptography": {
+      "schemeFamily": "CKKS (approximate-arithmetic leveled homomorphic encryption, RLWE-based)",
+      "library": {
+        "name": "node-seal",
+        "version": "^7.0.0",
+        "upstream": "Microsoft SEAL 4.1.2"
+      },
+      "parameterSets": [
+        {
+          "id": "N1024",
+          "polyModulusDegree": 1024,
+          "coeffModulusBits": [
+            27
+          ],
+          "totalCoeffModulusBits": 27,
+          "scaleBits": 20
+        },
+        {
+          "id": "N2048",
+          "polyModulusDegree": 2048,
+          "coeffModulusBits": [
+            18,
+            17,
+            18
+          ],
+          "totalCoeffModulusBits": 53,
+          "scaleBits": 16
+        },
+        {
+          "id": "N4096",
+          "polyModulusDegree": 4096,
+          "coeffModulusBits": [
+            33,
+            27,
+            33
+          ],
+          "totalCoeffModulusBits": 93,
+          "scaleBits": 24
+        },
+        {
+          "id": "N8192",
+          "polyModulusDegree": 8192,
+          "coeffModulusBits": [
+            60,
+            40,
+            40,
+            60
+          ],
+          "totalCoeffModulusBits": 200,
+          "scaleBits": 36
+        },
+        {
+          "id": "N16384",
+          "polyModulusDegree": 16384,
+          "coeffModulusBits": [
+            60,
+            50,
+            50,
+            50,
+            50,
+            50,
+            60
+          ],
+          "totalCoeffModulusBits": 370,
+          "scaleBits": 46
+        }
+      ],
+      "otherBackends": [
+        "Plaintext (no cryptography, baseline)",
+        "MockEncrypted (non-cryptographic placeholder, development only)"
+      ]
+    },
+    "dataClassifications": [
+      {
+        "dataType": "camera_frame",
+        "baselineClass": "LOCAL_ONLY",
+        "rationale": "Raw imagery is large, highly sensitive, and not needed off-device once features are extracted."
+      },
+      {
+        "dataType": "object_bounding_box",
+        "baselineClass": "PLAINTEXT",
+        "rationale": "Low-sensitivity geometric summary already stripped of raw pixels; local use only, cheap to keep plaintext."
+      },
+      {
+        "dataType": "object_embedding",
+        "baselineClass": "ENCRYPTED",
+        "rationale": "Derived feature vector can re-identify what the drone observed; encrypt before it leaves the device."
+      },
+      {
+        "dataType": "fleet_aggregate_statistic",
+        "baselineClass": "AGGREGATABLE",
+        "rationale": "Only the aggregate (mean/sum across drones) is useful centrally — CKKS lets the server compute it without seeing inputs."
+      },
+      {
+        "dataType": "battery_telemetry",
+        "baselineClass": "PLAINTEXT",
+        "rationale": "Operationally necessary, low sensitivity, needed quickly and cheaply for fleet health dashboards."
+      },
+      {
+        "dataType": "restricted_location_telemetry",
+        "baselineClass": "ENCRYPTED",
+        "rationale": "GPS trace over a restricted site is sensitive on its own, independent of any other signal."
+      },
+      {
+        "dataType": "emergency_flight_control",
+        "baselineClass": "LOCAL_ONLY",
+        "rationale": "Safety-critical control loop; must never depend on network or cryptographic availability."
+      }
+    ],
+    "dependencies": [
+      {
+        "name": "node-seal",
+        "version": "^7.0.0",
+        "dev": false
+      },
+      {
+        "name": "@cyclonedx/cyclonedx-npm",
+        "version": "^6.0.1",
+        "dev": true
+      },
+      {
+        "name": "@types/node",
+        "version": "^26.6.4",
+        "dev": true
+      },
+      {
+        "name": "tsx",
+        "version": "^4.23.15",
+        "dev": true
+      },
+      {
+        "name": "typescript",
+        "version": "^7.0.2",
+        "dev": true
+      }
+    ],
+    "knownVulnerabilities": "Not scanned by this generator. Run `npm run security:sbom` to produce results/sbom.json (CycloneDX, via @cyclonedx/cyclonedx-npm) and feed it to a vulnerability scanner (e.g. `npm audit`, Grype, OSV-Scanner) for an actual vulnerability register entry.",
+    "updateMechanism": "None implemented. This is a research prototype distributed as source; there is no signed-update or OTA mechanism. A production system would need one before any CRA security-update-policy claim could be supported.",
+    "networkInterfaces": "None opened by default. apps/fleet/compare.ts simulates the fleet/aggregator network path in-process (no sockets) so that reported latency/bandwidth numbers are pure compute+serialization cost, not this host's network stack.",
+    "testStatus": "See results/ for the latest tools/bench and apps/fleet run artifacts; no automated CI is configured in this prototype."
+  },
+  "assets": [
+    {
+      "path": "lib/ckks",
+      "kind": "library",
+      "description": "CryptoBackend abstraction + real CKKS backend (node-seal/Microsoft SEAL), plaintext baseline, mock-encrypted placeholder."
+    },
+    {
+      "path": "lib/kernels",
+      "kind": "library",
+      "description": "From-scratch reference modular-arithmetic and NTT kernels, used for architecture-level bottleneck reasoning."
+    },
+    {
+      "path": "lib/telemetry",
+      "kind": "library",
+      "description": "Deterministic synthetic drone-fleet telemetry generator (seeded PRNG, offline)."
+    },
+    {
+      "path": "lib/sensor_fusion",
+      "kind": "library",
+      "description": "Reduces a telemetry sample to the fixed-layout feature vector that is allowed to leave a drone."
+    },
+    {
+      "path": "lib/policy",
+      "kind": "library",
+      "description": "Data classification catalog + explainable adaptive compute-placement scheduler."
+    },
+    {
+      "path": "lib/security",
+      "kind": "library",
+      "description": "Security manifest and CRA evidence generation (this module)."
+    },
+    {
+      "path": "lib/platform",
+      "kind": "library",
+      "description": "Host-info capture and the (explicitly stubbed) Electron E1 hardware abstraction layer."
+    },
+    {
+      "path": "apps/fleet",
+      "kind": "application",
+      "description": "Plaintext-vs-CKKS fleet aggregation comparison across 5 fleet sizes."
+    },
+    {
+      "path": "apps/demo",
+      "kind": "application",
+      "description": "The end-to-end \"killer demo\" narrative (confidential fleet anomaly response)."
+    },
+    {
+      "path": "apps/redteam",
+      "kind": "application",
+      "description": "Defensive red-team demonstration: network intercept, compromised cloud, compromised drone."
+    },
+    {
+      "path": "apps/dashboard",
+      "kind": "application",
+      "description": "Separate Vite+React sub-project: browser visualization of this repo's real results/*.json artifacts. Own package.json/tsconfig/build — not scanned as part of this repo's CLI attack surface."
+    },
+    {
+      "path": "tools/bench",
+      "kind": "tool",
+      "description": "CKKS operation and kernel micro-benchmark suites."
+    },
+    {
+      "path": "tools/security",
+      "kind": "tool",
+      "description": "Security manifest, SBOM, and CRA evidence generator CLIs."
+    },
+    {
+      "path": "docs",
+      "kind": "documentation",
+      "description": "Human-readable threat model, bottleneck report, and this evidence set."
+    },
+    {
+      "path": "results",
+      "kind": "configuration",
+      "description": "Generated, reproducible benchmark/demo/security artifacts (JSON + CSV)."
+    },
+    {
+      "path": "package.json",
+      "kind": "configuration",
+      "description": "npm package manifest; also the dependency-inventory source of truth."
+    },
+    {
+      "path": "tsconfig.json",
+      "kind": "configuration",
+      "description": "TypeScript compiler configuration."
+    }
+  ],
+  "attackSurface": [
+    {
+      "surface": "Network listeners",
+      "description": "None. No server/socket is opened by any script in this repo.",
+      "exposure": "none"
+    },
+    {
+      "surface": "CLI entry points",
+      "description": "8 scripts runnable via `npx tsx`/npm scripts (apps/demo/killer-demo.ts, apps/fleet/compare.ts, apps/redteam/intercept-demo.ts, tools/bench/ckks-bench.ts, tools/bench/kernel-bench.ts, tools/bench/util.ts, …). Attack surface here is local-process only: whoever can execute Node in this checkout.",
+      "exposure": "local-process"
+    },
+    {
+      "surface": "Filesystem (results/)",
+      "description": "Benchmark/demo/security tools read package.json and package-lock.json and write JSON/CSV under results/. No path comes from untrusted/network input.",
+      "exposure": "filesystem"
+    },
+    {
+      "surface": "npm dependency tree (5 declared, 1 runtime)",
+      "description": "node-seal (runtime) and its WASM binary are the actual cryptographic trust base; a compromised upstream package is this prototype's largest realistic attack surface. See results/sbom.json for the full transitive tree.",
+      "exposure": "third-party-dependency"
+    }
+  ],
+  "vulnReport": {
+    "generatedAt": "2026-10-05T01:42:40.640Z",
+    "tool": "npm audit (via this repo's own package-lock.json)",
+    "totalsBySeverity": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "entries": [],
+    "rawExitCode": 0
+  },
+  "testRun": {
+    "generatedAt": "2026-10-05T01:42:41.448Z",
+    "command": "npm test",
+    "passed": true,
+    "summary": "ℹ pass 3"
+  }
+}

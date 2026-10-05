@@ -8,16 +8,18 @@ E1 — could make privacy-preserving physical-AI systems (the flagship
 scenario: autonomous drone fleets inspecting infrastructure) practical at
 the energy-constrained edge.
 
-**This is a single research session's slice of a much larger brief.** It
-deliberately prioritizes the scientifically defensible core — a real CKKS
-benchmark suite, a measured bottleneck decomposition, a policy-driven
-crypto-placement engine, and a real plaintext-vs-encrypted fleet-aggregation
-comparison — over a polished UI. The browser-based 3D fleet simulator, the
-full 15-document CRA evidence set, and effcc/E1 compiler integration are
-**not built** in this slice; they are explicitly out of scope here and
-listed under [Not built this session](#not-built-this-session). Nothing
-below is a mockup — every number comes from code in this repository that
-you can re-run yourself (see [Reproduction](#reproduction)).
+**This is a research prototype, not the full original brief.** It
+prioritizes the scientifically defensible core — a real CKKS benchmark
+suite, a measured bottleneck decomposition, a policy-driven crypto-placement
+engine, a real plaintext-vs-encrypted fleet-aggregation comparison, an
+end-to-end confidential-fleet demo, a defensive red-team demonstration, an
+11-document CRA evidence set, and a browser dashboard that visualizes all
+of the above from its own real result files — over chasing every item in
+the original 35-section brief. effcc/E1 compiler integration and a true
+interactive 3D simulator are **not built**: see [Not built](#not-built) for
+exactly what and why. Nothing below is a mockup — every number comes from
+code in this repository that you can re-run yourself (see
+[Reproduction](#reproduction)).
 
 ## Research Question
 
@@ -308,17 +310,46 @@ Not a compliance claim — evidence-generation tooling only.
 `tools/security/generate-manifest.ts` produces `results/security-manifest.json`
 from this repository's *actual* state: real `package.json` dependencies,
 the real CKKS parameter sets in use, the real git commit, a real SHA-256 of
-`package-lock.json`. Fields this prototype cannot honestly populate say so
-explicitly instead of being filled with a plausible-looking placeholder —
-e.g. `knownVulnerabilities` points at `npm run security:sbom` (which runs
-the real CycloneDX generator, `@cyclonedx/cyclonedx-npm`, producing
-`results/sbom.json`) and names the scanners (`npm audit`, Grype,
-OSV-Scanner) that would need to run against it, rather than claiming a scan
-occurred. `updateMechanism` says plainly: "None implemented." See also
+`package-lock.json`.
+
+`npm run security:evidence` (`tools/security/generate-evidence.ts`) goes
+further and writes the full 11-document evidence set into
+`docs/cra-evidence/` — asset inventory, dependency inventory, cryptographic
+configuration record, vulnerability register, security update policy,
+support period, an incident-response *template* (explicitly labeled as a
+draft, not an operating capability), a build/reproducibility record,
+security test results, an attack-surface map, and a data-flow/trust-
+boundary diagram (mermaid). Every one of these is generated from live
+repository state — a real `npm audit --json` scan, a real `npm test` run,
+the real file tree — not a filled-in template. Fields this prototype
+genuinely cannot populate say so plainly instead of guessing: e.g.
+`05-security-update-policy.md` states "none implemented," and
+`07-incident-response-procedure.md` is explicitly marked as a draft
+skeleton. See `docs/cra-evidence/README.md` for the index and
 `docs/threat-model.md` for the companion human-readable threat register.
-The full 15-document CRA evidence set from the original brief (asset
-inventory, incident-response procedure, attack-surface map, etc.) is
-**not built** this session — see below.
+
+## Killer Demo & Red-Team Mode
+
+- `npm run demo:killer` (`apps/demo/killer-demo.ts`) — the project brief's
+  "3-minute demo": a 20-drone fleet, a developing infrastructure anomaly,
+  local perception → policy classification → CKKS encryption → homomorphic
+  fleet aggregation → a fleet-wide alert decided from the encrypted mean
+  alone → local (never-transmitted) per-drone self-selection of a
+  responder → a side-by-side Conventional-vs-Confidential-Edge comparison.
+  Every number comes from this repo's own `lib/ckks`, `lib/policy`,
+  `lib/telemetry` code — nothing new is fabricated for the narrative.
+- `npm run redteam:intercept` (`apps/redteam/intercept-demo.ts`) — a
+  defensive-only demonstration of three threats from `docs/threat-model.md`
+  (network intercept, compromised cloud/aggregator, stolen drone), showing
+  concretely what bytes/values an attacker actually gains in the plaintext
+  vs. confidential architecture. This one surfaced a real methodology bug
+  worth knowing about: a naive whole-buffer Shannon-entropy comparison
+  initially made CKKS ciphertext look *less* random than plaintext, because
+  node-seal serializes each RNS coefficient into a fixed 8-byte word while
+  this parameter set's moduli only use 27-33 of those bits — the top bytes
+  of every word are structurally zero. The script now reports per-word-
+  byte-offset entropy, which is the metric that actually supports the
+  "ciphertext looks pseudorandom" claim, and says so.
 
 ## Limitations
 
@@ -343,38 +374,79 @@ inventory, incident-response procedure, attack-surface map, etc.) is
   parameter set is verified for exactly one multiply→relinearize→rescale→
   rotate cycle; deeper chains are not exercised or claimed.
 
-### Not built this session
+### Not built
 
-Per the original project brief, these are explicitly deferred, not
+Per the original project brief, these remain explicitly deferred, not
 secretly faked:
 
-- The browser-based interactive 3D fleet simulator (drones/terrain/
-  comm-links/attack injection UI).
-- Red-team mode (live network-intercept / compromised-cloud / compromised-
-  drone demonstrations) beyond the threat register in `docs/threat-model.md`.
-- The full 15-document CRA evidence set (asset inventory, incident-response
-  procedure, attack-surface map, build/reproducibility record beyond what
-  `lib/security/manifest.ts` already covers).
 - effcc / E1 compiler integration and CPU-vs-GPU-vs-E1 application
-  benchmarking (no toolchain or hardware access).
-- The "Why Efficient?" per-stage interactive analyzer UI (the written
-  analysis exists in [Why Efficient?](#why-efficient) and
-  [E1 Mapping](#e1-mapping) above; no UI was built).
+  benchmarking — requires hardware/toolchain access this environment does
+  not have, and no public, verified E1 architectural specs (PE count,
+  clock, cache sizes, memory bandwidth) are available to build a labeled
+  `SIMULATED_E1` cost model from either. Inventing one would violate this
+  project's "do not fabricate hardware numbers" rule, so it is left undone
+  rather than faked.
+- A real power-measurement rig — every "energy" field remains
+  `NOT_MEASURED` (see [Energy Analysis](#energy-analysis)).
+- An "argmax across ciphertexts" (exact highest-risk-drone identification
+  without any local self-selection step) — CKKS supports sum/mean cheaply
+  but not exact comparison/argmax without expensive polynomial
+  approximation; `apps/demo/killer-demo.ts` documents the local-self-select
+  design this constraint led to, rather than hand-waving past it.
+- A true interactive 3D fleet simulator — see [Dashboard](#dashboard) below
+  for what the browser layer actually is instead (a visualization of this
+  repo's real recorded results, not a live steerable simulation).
 
 ## Reproduction
 
 ```sh
 npm install
-npm run bench:ckks       # tools/bench/ckks-bench.ts -> results/ckks-bench-*.{json,csv}
-npm run bench:kernels    # tools/bench/kernel-bench.ts -> results/kernel-bench-*.{json,csv}
-npm run fleet:compare    # apps/fleet/compare.ts -> results/fleet-aggregation-compare-*.{json,csv}
-npm run security:sbom    # -> results/sbom.json (CycloneDX)
-npm run security:manifest # tools/security/generate-manifest.ts -> results/security-manifest.json
+npm run bench:ckks         # tools/bench/ckks-bench.ts -> results/ckks-bench-*.{json,csv}
+npm run bench:kernels      # tools/bench/kernel-bench.ts -> results/kernel-bench-*.{json,csv}
+npm run fleet:compare      # apps/fleet/compare.ts -> results/fleet-aggregation-compare-*.{json,csv}
+npm run demo:killer        # apps/demo/killer-demo.ts -> results/killer-demo-*.json
+npm run redteam:intercept  # apps/redteam/intercept-demo.ts -> results/redteam-intercept-demo-*.json
+npm run security:sbom      # -> results/sbom.json (CycloneDX)
+npm run security:manifest  # -> results/security-manifest.json
+npm run security:evidence  # -> docs/cra-evidence/*.md, results/cra-evidence.json
+npm test                   # lib/kernels/*.test.ts correctness tests
+
+cd apps/dashboard && npm install && npm run dev   # browser dashboard, see Dashboard below
 ```
 
 Every command above writes a timestamped artifact and a `-latest` copy
 under `results/`, each self-describing (experiment ID, git commit, host
 info) per [Benchmark Methodology](#benchmark-methodology).
+
+## Dashboard
+
+`apps/dashboard` is a Vite + React, dark-engineering-aesthetic browser
+dashboard (see project brief section 23's "Apple hardware engineering /
+NVIDIA developer tooling / Palantir operational interface" direction). It
+is a **visualization layer over this repo's real `results/*.json`
+artifacts** — it reads them, it does not simulate new numbers to look
+busy. Views:
+
+- **CRYPTO** — the CKKS per-operation latency table and bottleneck
+  breakdown from `results/ckks-bench-latest.json`, plus the Montgomery-vs-
+  naive kernel comparison from `results/kernel-bench-latest.json`.
+- **FLEET** — the plaintext-vs-CKKS aggregation comparison across fleet
+  sizes from `results/fleet-aggregation-compare-latest.json`.
+- **MISSION** — the killer-demo narrative and its real decrypted fleet-mean
+  / self-selection outcome from `results/killer-demo-latest.json`.
+- **CONFIDENTIALITY** — the red-team intercept demo's entropy-by-word-
+  offset breakdown from `results/redteam-intercept-demo-latest.json`.
+- **SECURITY / CRA EVIDENCE** — the threat register and the CRA evidence
+  set's headline fields from `results/security-manifest.json` and
+  `results/cra-evidence.json`.
+- **COMPUTE / ENERGY / COMPILER** — each panel states plainly what is not
+  available (no E1 hardware, no power instrumentation, no effcc toolchain)
+  rather than filling the space with invented numbers.
+
+Run it with `cd apps/dashboard && npm install && npm run dev`. It expects
+the `results/*.json` files described above to exist — run the
+`npm run bench:*` / `demo:*` / `redteam:*` / `security:*` commands first
+(or just use the ones already committed in `results/`).
 
 ## Future Work
 
@@ -388,5 +460,10 @@ info) per [Benchmark Methodology](#benchmark-methodology).
   (one ciphertext per drone) and reports the resulting bandwidth cost
   honestly rather than optimizing it away before measuring the naive case.
 - Chained multi-level multiplicative depth testing per parameter set.
-- The interactive 3D simulator, red-team mode, and full CRA evidence set
-  listed under [Not built this session](#not-built-this-session).
+- A true interactive 3D fleet simulator (live drones/terrain/comm-links
+  with runtime attack injection) — `apps/dashboard` visualizes real
+  recorded results; it does not yet run a live, steerable simulation in
+  the browser.
+- An approximate-comparison (polynomial sign-function) CKKS circuit for
+  real encrypted argmax, to remove the local-self-selection step in
+  `apps/demo/killer-demo.ts`.

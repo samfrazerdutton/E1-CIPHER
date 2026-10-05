@@ -8,8 +8,11 @@
     "bench:ckks": "tsx tools/bench/ckks-bench.ts",
     "bench:kernels": "tsx tools/bench/kernel-bench.ts",
     "fleet:compare": "tsx apps/fleet/compare.ts",
+    "demo:killer": "tsx apps/demo/killer-demo.ts",
+    "redteam:intercept": "tsx apps/redteam/intercept-demo.ts",
     "security:manifest": "tsx tools/security/generate-manifest.ts",
     "security:sbom": "cyclonedx-npm --output-file results/sbom.json",
+    "security:evidence": "tsx tools/security/generate-evidence.ts",
     "test": "tsx --test lib/**/*.test.ts"
   },
   "repository": {

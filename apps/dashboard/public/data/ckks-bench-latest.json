@@ -1,0 +1,830 @@
+{
+  "experiment": {
+    "experimentId": "85a33bbe-db7f-43aa-8d21-497d1ba60219",
+    "timestamp": "2026-10-05T01:03:12.917Z",
+    "host": {
+      "resultClass": "HOST_REFERENCE",
+      "platform": "win32",
+      "arch": "x64",
+      "osRelease": "10.0.26200",
+      "cpuModel": "AMD Ryzen 9 4900HS with Radeon Graphics         ",
+      "cpuCount": 16,
+      "totalMemoryBytes": 16556589056,
+      "nodeVersion": "v25.6.1",
+      "gitCommit": "97f03c25f5f32b09d30bfe79db8d050ed6691b79",
+      "capturedAt": "2026-10-05T01:03:12.944Z"
+    }
+  },
+  "trialsPerOp": 30,
+  "results": [
+    {
+      "paramSet": {
+        "id": "N1024",
+        "logN": 10,
+        "polyModulusDegree": 1024,
+        "coeffModulusBits": [
+          27
+        ],
+        "scaleBits": 20,
+        "notes": "Single-modulus chain (128-bit security budget at N=1024 is only 27 bits). Supports encode/encrypt/add/decrypt/decode only — no headroom for a second modulus, so multiply+rescale and rotation are not attempted at this parameter set."
+      },
+      "parametersSet": true,
+      "maxBitsAt128": 27,
+      "requestedBits": 27,
+      "slotCount": 512,
+      "ops": {
+        "encode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.08720333333333331,
+            "medianMs": 0.0825,
+            "stdDevMs": 0.018911327880987684,
+            "minMs": 0.0734,
+            "maxMs": 0.1691
+          }
+        },
+        "encrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.2810866666666667,
+            "medianMs": 0.267,
+            "stdDevMs": 0.04990948295553551,
+            "minMs": 0.2363,
+            "maxMs": 0.4591
+          }
+        },
+        "add": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.01526666666666666,
+            "medianMs": 0.0126,
+            "stdDevMs": 0.007940375026127895,
+            "minMs": 0.0091,
+            "maxMs": 0.0431
+          }
+        },
+        "multiply": {
+          "supported": false,
+          "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated, so multiply/relinearize/rescale/rotate are not attempted."
+        },
+        "relinearize": {
+          "supported": false,
+          "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated, so multiply/relinearize/rescale/rotate are not attempted."
+        },
+        "rescale": {
+          "supported": false,
+          "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated, so multiply/relinearize/rescale/rotate are not attempted."
+        },
+        "rotate": {
+          "supported": false,
+          "reason": "Parameter set has no key-switching support (single-modulus chain, 27-bit budget); relin/Galois keys cannot be generated, so multiply/relinearize/rescale/rotate are not attempted."
+        },
+        "decrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.02678666666666667,
+            "medianMs": 0.0236,
+            "stdDevMs": 0.008012770362919986,
+            "minMs": 0.0191,
+            "maxMs": 0.0536
+          }
+        },
+        "decode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.06515000000000001,
+            "medianMs": 0.062,
+            "stdDevMs": 0.00630252594864419,
+            "minMs": 0.0602,
+            "maxMs": 0.0824
+          }
+        }
+      },
+      "ciphertextBytes": 16497,
+      "accuracy": {
+        "encodeEncryptDecryptDecodeMaxAbsError": 0.009781024483076939
+      },
+      "bottleneck": [
+        {
+          "op": "encrypt",
+          "meanMs": 0.2810866666666667,
+          "shareOfMeasuredTotal": 0.5911474398519433
+        },
+        {
+          "op": "encode",
+          "meanMs": 0.08720333333333331,
+          "shareOfMeasuredTotal": 0.18339549099882224
+        },
+        {
+          "op": "decode",
+          "meanMs": 0.06515000000000001,
+          "shareOfMeasuredTotal": 0.13701559082496778
+        },
+        {
+          "op": "decrypt",
+          "meanMs": 0.02678666666666667,
+          "shareOfMeasuredTotal": 0.05633447366945209
+        },
+        {
+          "op": "add",
+          "meanMs": 0.01526666666666666,
+          "shareOfMeasuredTotal": 0.032107004654814635
+        }
+      ]
+    },
+    {
+      "paramSet": {
+        "id": "N2048",
+        "logN": 11,
+        "polyModulusDegree": 2048,
+        "coeffModulusBits": [
+          18,
+          17,
+          18
+        ],
+        "scaleBits": 16,
+        "notes": "Three-prime chain, multiplicative depth 1. A naive 2-prime chain ([23,23], sum 46 <= the 54-bit budget) was tried first but SEAL rejects it at multiply time (\"scale out of bounds\") and at rescale time (\"end of modulus switching chain reached\") — with hybrid key-switching enabled, 2 primes give zero usable multiplicative levels in practice, not 1. Confirmed empirically (see commit history / docs/bottleneck-report.md); 3 smaller primes are required to get one real multiply+rescale at this N, at the cost of a larger relative error (~4e-2)."
+      },
+      "parametersSet": true,
+      "maxBitsAt128": 54,
+      "requestedBits": 53,
+      "slotCount": 1024,
+      "ops": {
+        "encode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.12928666666666666,
+            "medianMs": 0.1271,
+            "stdDevMs": 0.0063073361166889556,
+            "minMs": 0.1222,
+            "maxMs": 0.1436
+          }
+        },
+        "encrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.9807099999999997,
+            "medianMs": 0.9601,
+            "stdDevMs": 0.0929322274563566,
+            "minMs": 0.9331,
+            "maxMs": 1.4592
+          }
+        },
+        "add": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.02925333333333334,
+            "medianMs": 0.0266,
+            "stdDevMs": 0.005215983980888831,
+            "minMs": 0.0253,
+            "maxMs": 0.0458
+          }
+        },
+        "multiply": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.1669166666666667,
+            "medianMs": 0.1613,
+            "stdDevMs": 0.012294120094129916,
+            "minMs": 0.1587,
+            "maxMs": 0.2144
+          }
+        },
+        "relinearize": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.8615200000000001,
+            "medianMs": 0.8038,
+            "stdDevMs": 0.12922593754093384,
+            "minMs": 0.7716,
+            "maxMs": 1.2382
+          }
+        },
+        "rescale": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.9446933333333334,
+            "medianMs": 0.9334,
+            "stdDevMs": 0.040827718797677444,
+            "minMs": 0.9185,
+            "maxMs": 1.1484
+          }
+        },
+        "rotate": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.6556099999999998,
+            "medianMs": 0.6338,
+            "stdDevMs": 0.05762003904892811,
+            "minMs": 0.6251,
+            "maxMs": 0.928
+          }
+        },
+        "decrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.06544666666666667,
+            "medianMs": 0.0661,
+            "stdDevMs": 0.008693895687332708,
+            "minMs": 0.0486,
+            "maxMs": 0.096
+          }
+        },
+        "decode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.2202,
+            "medianMs": 0.2071,
+            "stdDevMs": 0.0326223747347328,
+            "minMs": 0.194,
+            "maxMs": 0.3228
+          }
+        }
+      },
+      "ciphertextBytes": 65649,
+      "accuracy": {
+        "encodeEncryptDecryptDecodeMaxAbsError": 0.031813585329902305,
+        "multiplyMaxAbsError": 0.0501253828056798
+      },
+      "bottleneck": [
+        {
+          "op": "encrypt",
+          "meanMs": 0.9807099999999997,
+          "shareOfMeasuredTotal": 0.24193337505170248
+        },
+        {
+          "op": "rescale",
+          "meanMs": 0.9446933333333334,
+          "shareOfMeasuredTotal": 0.23304834917781647
+        },
+        {
+          "op": "relinearize",
+          "meanMs": 0.8615200000000001,
+          "shareOfMeasuredTotal": 0.2125301478261084
+        },
+        {
+          "op": "rotate",
+          "meanMs": 0.6556099999999998,
+          "shareOfMeasuredTotal": 0.16173378472499175
+        },
+        {
+          "op": "decode",
+          "meanMs": 0.2202,
+          "shareOfMeasuredTotal": 0.054321592709756096
+        },
+        {
+          "op": "multiply",
+          "meanMs": 0.1669166666666667,
+          "shareOfMeasuredTotal": 0.04117701718045772
+        },
+        {
+          "op": "encode",
+          "meanMs": 0.12928666666666666,
+          "shareOfMeasuredTotal": 0.03189399477506206
+        },
+        {
+          "op": "decrypt",
+          "meanMs": 0.06544666666666667,
+          "shareOfMeasuredTotal": 0.01614517334640253
+        },
+        {
+          "op": "add",
+          "meanMs": 0.02925333333333334,
+          "shareOfMeasuredTotal": 0.007216565207702385
+        }
+      ]
+    },
+    {
+      "paramSet": {
+        "id": "N4096",
+        "logN": 12,
+        "polyModulusDegree": 4096,
+        "coeffModulusBits": [
+          33,
+          27,
+          33
+        ],
+        "scaleBits": 24,
+        "notes": "Three-prime chain. Verified to support one multiply+relinearize+rescale+rotate at this scale (see N2048 note on why prime count does not map 1:1 to usable depth under hybrid key-switching). Full achievable chain depth beyond one level is not exercised by this benchmark and is not claimed."
+      },
+      "parametersSet": true,
+      "maxBitsAt128": 109,
+      "requestedBits": 93,
+      "slotCount": 2048,
+      "ops": {
+        "encode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.33816000000000007,
+            "medianMs": 0.2642,
+            "stdDevMs": 0.35057089592073487,
+            "minMs": 0.2595,
+            "maxMs": 2.2201
+          }
+        },
+        "encrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.9614399999999996,
+            "medianMs": 1.9561,
+            "stdDevMs": 0.021994023430620128,
+            "minMs": 1.9271,
+            "maxMs": 2.0055
+          }
+        },
+        "add": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.05236333333333334,
+            "medianMs": 0.0477,
+            "stdDevMs": 0.012035488726632121,
+            "minMs": 0.0374,
+            "maxMs": 0.1026
+          }
+        },
+        "multiply": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.36182000000000003,
+            "medianMs": 0.312,
+            "stdDevMs": 0.2427114492561074,
+            "minMs": 0.3065,
+            "maxMs": 1.6671
+          }
+        },
+        "relinearize": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.6788533333333335,
+            "medianMs": 1.6404,
+            "stdDevMs": 0.16987635254959874,
+            "minMs": 1.6152,
+            "maxMs": 2.584
+          }
+        },
+        "rescale": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.9787766666666664,
+            "medianMs": 1.9628,
+            "stdDevMs": 0.041756649636781044,
+            "minMs": 1.9311,
+            "maxMs": 2.1005
+          }
+        },
+        "rotate": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.3461299999999998,
+            "medianMs": 1.3384,
+            "stdDevMs": 0.022410044622891777,
+            "minMs": 1.3168,
+            "maxMs": 1.4174
+          }
+        },
+        "decrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.13405000000000003,
+            "medianMs": 0.0975,
+            "stdDevMs": 0.18183241872669462,
+            "minMs": 0.0948,
+            "maxMs": 1.1125
+          }
+        },
+        "decode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.41164666666666666,
+            "medianMs": 0.4001,
+            "stdDevMs": 0.039639506668081644,
+            "minMs": 0.3939,
+            "maxMs": 0.6167
+          }
+        }
+      },
+      "ciphertextBytes": 131185,
+      "accuracy": {
+        "encodeEncryptDecryptDecodeMaxAbsError": 0.00022342462158519982,
+        "multiplyMaxAbsError": 0.0018381037013890378
+      },
+      "bottleneck": [
+        {
+          "op": "rescale",
+          "meanMs": 1.9787766666666664,
+          "shareOfMeasuredTotal": 0.23946740826439344
+        },
+        {
+          "op": "encrypt",
+          "meanMs": 1.9614399999999996,
+          "shareOfMeasuredTotal": 0.23736936117067878
+        },
+        {
+          "op": "relinearize",
+          "meanMs": 1.6788533333333335,
+          "shareOfMeasuredTotal": 0.20317131456103582
+        },
+        {
+          "op": "rotate",
+          "meanMs": 1.3461299999999998,
+          "shareOfMeasuredTotal": 0.16290583354713162
+        },
+        {
+          "op": "decode",
+          "meanMs": 0.41164666666666666,
+          "shareOfMeasuredTotal": 0.04981661753339691
+        },
+        {
+          "op": "multiply",
+          "meanMs": 0.36182000000000003,
+          "shareOfMeasuredTotal": 0.04378669867993669
+        },
+        {
+          "op": "encode",
+          "meanMs": 0.33816000000000007,
+          "shareOfMeasuredTotal": 0.04092341502848763
+        },
+        {
+          "op": "decrypt",
+          "meanMs": 0.13405000000000003,
+          "shareOfMeasuredTotal": 0.016222450273742507
+        },
+        {
+          "op": "add",
+          "meanMs": 0.05236333333333334,
+          "shareOfMeasuredTotal": 0.006336900941196593
+        }
+      ]
+    },
+    {
+      "paramSet": {
+        "id": "N8192",
+        "logN": 13,
+        "polyModulusDegree": 8192,
+        "coeffModulusBits": [
+          60,
+          40,
+          40,
+          60
+        ],
+        "scaleBits": 36,
+        "notes": "Classic SEAL example chain. Verified to support one multiply+relinearize+rescale+rotate at this scale; deeper chaining not exercised by this benchmark and not claimed."
+      },
+      "parametersSet": true,
+      "maxBitsAt128": 218,
+      "requestedBits": 200,
+      "slotCount": 4096,
+      "ops": {
+        "encode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.8312799999999999,
+            "medianMs": 0.7538,
+            "stdDevMs": 0.3678360344863818,
+            "minMs": 0.7356,
+            "maxMs": 2.8086
+          }
+        },
+        "encrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 5.25276,
+            "medianMs": 5.1191,
+            "stdDevMs": 0.40896278771219935,
+            "minMs": 5.0258,
+            "maxMs": 6.7415
+          }
+        },
+        "add": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.22871666666666665,
+            "medianMs": 0.1421,
+            "stdDevMs": 0.44794401962993347,
+            "minMs": 0.1147,
+            "maxMs": 2.6379
+          }
+        },
+        "multiply": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.05615,
+            "medianMs": 1.0414,
+            "stdDevMs": 0.052213342803029465,
+            "minMs": 0.9853,
+            "maxMs": 1.1993
+          }
+        },
+        "relinearize": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 5.747743333333335,
+            "medianMs": 5.5439,
+            "stdDevMs": 0.6658255555740976,
+            "minMs": 5.493,
+            "maxMs": 8.46
+          }
+        },
+        "rescale": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 6.682839999999999,
+            "medianMs": 6.6459,
+            "stdDevMs": 0.1441935749840008,
+            "minMs": 6.5537,
+            "maxMs": 7.3792
+          }
+        },
+        "rotate": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 4.751963333333333,
+            "medianMs": 4.624,
+            "stdDevMs": 0.46844103825585365,
+            "minMs": 4.5203,
+            "maxMs": 7.0104
+          }
+        },
+        "decrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 0.29227,
+            "medianMs": 0.2816,
+            "stdDevMs": 0.043727673541286566,
+            "minMs": 0.2729,
+            "maxMs": 0.5203
+          }
+        },
+        "decode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.3006733333333331,
+            "medianMs": 1.28,
+            "stdDevMs": 0.08010120653828434,
+            "minMs": 1.2522,
+            "maxMs": 1.6352
+          }
+        }
+      },
+      "ciphertextBytes": 393329,
+      "accuracy": {
+        "encodeEncryptDecryptDecodeMaxAbsError": 1.1209722733385163e-7,
+        "multiplyMaxAbsError": 0.00000192241027302531
+      },
+      "bottleneck": [
+        {
+          "op": "rescale",
+          "meanMs": 6.682839999999999,
+          "shareOfMeasuredTotal": 0.25561270681455134
+        },
+        {
+          "op": "relinearize",
+          "meanMs": 5.747743333333335,
+          "shareOfMeasuredTotal": 0.21984608811652323
+        },
+        {
+          "op": "encrypt",
+          "meanMs": 5.25276,
+          "shareOfMeasuredTotal": 0.2009134143339064
+        },
+        {
+          "op": "rotate",
+          "meanMs": 4.751963333333333,
+          "shareOfMeasuredTotal": 0.1817583857038073
+        },
+        {
+          "op": "decode",
+          "meanMs": 1.3006733333333331,
+          "shareOfMeasuredTotal": 0.049749602177343547
+        },
+        {
+          "op": "multiply",
+          "meanMs": 1.05615,
+          "shareOfMeasuredTotal": 0.04039680140511944
+        },
+        {
+          "op": "encode",
+          "meanMs": 0.8312799999999999,
+          "shareOfMeasuredTotal": 0.031795723213603834
+        },
+        {
+          "op": "decrypt",
+          "meanMs": 0.29227,
+          "shareOfMeasuredTotal": 0.011179068453036274
+        },
+        {
+          "op": "add",
+          "meanMs": 0.22871666666666665,
+          "shareOfMeasuredTotal": 0.008748209782108825
+        }
+      ]
+    },
+    {
+      "paramSet": {
+        "id": "N16384",
+        "logN": 14,
+        "polyModulusDegree": 16384,
+        "coeffModulusBits": [
+          60,
+          50,
+          50,
+          50,
+          50,
+          50,
+          60
+        ],
+        "scaleBits": 46,
+        "notes": "Deep chain. Verified to support one multiply+relinearize+rescale+rotate at this scale; deeper chaining not exercised by this benchmark and not claimed."
+      },
+      "parametersSet": true,
+      "maxBitsAt128": 438,
+      "requestedBits": 370,
+      "slotCount": 8192,
+      "ops": {
+        "encode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 2.9878533333333337,
+            "medianMs": 2.9526,
+            "stdDevMs": 0.14637479913640267,
+            "minMs": 2.8773,
+            "maxMs": 3.6995
+          }
+        },
+        "encrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 18.10188,
+            "medianMs": 17.6725,
+            "stdDevMs": 1.9020682617263411,
+            "minMs": 17.4712,
+            "maxMs": 28.1971
+          }
+        },
+        "add": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.1143499999999997,
+            "medianMs": 0.7055,
+            "stdDevMs": 2.2165680751633445,
+            "minMs": 0.5889,
+            "maxMs": 13.043
+          }
+        },
+        "multiply": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 4.320876666666666,
+            "medianMs": 4.2773,
+            "stdDevMs": 0.12595773016726247,
+            "minMs": 4.152,
+            "maxMs": 4.6433
+          }
+        },
+        "relinearize": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 29.736409999999996,
+            "medianMs": 29.5416,
+            "stdDevMs": 0.6688050305582338,
+            "minMs": 29.1866,
+            "maxMs": 32.3867
+          }
+        },
+        "rescale": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 35.15900333333333,
+            "medianMs": 34.5652,
+            "stdDevMs": 2.4707223534131795,
+            "minMs": 34.1464,
+            "maxMs": 48.0664
+          }
+        },
+        "rotate": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 26.444800000000004,
+            "medianMs": 25.7682,
+            "stdDevMs": 3.1544924357705044,
+            "minMs": 25.5144,
+            "maxMs": 43.3294
+          }
+        },
+        "decrypt": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 1.1505433333333335,
+            "medianMs": 1.1291,
+            "stdDevMs": 0.060632167938223104,
+            "minMs": 1.0757,
+            "maxMs": 1.2999
+          }
+        },
+        "decode": {
+          "supported": true,
+          "timing": {
+            "trials": 30,
+            "meanMs": 6.718323333333334,
+            "medianMs": 6.733,
+            "stdDevMs": 0.1410675008245658,
+            "minMs": 6.1824,
+            "maxMs": 6.9617
+          }
+        }
+      },
+      "ciphertextBytes": 1572977,
+      "accuracy": {
+        "encodeEncryptDecryptDecodeMaxAbsError": 2.0408785772474403e-10,
+        "multiplyMaxAbsError": 3.953333105322088e-9
+      },
+      "bottleneck": [
+        {
+          "op": "rescale",
+          "meanMs": 35.15900333333333,
+          "shareOfMeasuredTotal": 0.2796299501179898
+        },
+        {
+          "op": "relinearize",
+          "meanMs": 29.736409999999996,
+          "shareOfMeasuredTotal": 0.23650246186315177
+        },
+        {
+          "op": "rotate",
+          "meanMs": 26.444800000000004,
+          "shareOfMeasuredTotal": 0.21032331419558303
+        },
+        {
+          "op": "encrypt",
+          "meanMs": 18.10188,
+          "shareOfMeasuredTotal": 0.14396960441261572
+        },
+        {
+          "op": "decode",
+          "meanMs": 6.718323333333334,
+          "shareOfMeasuredTotal": 0.053432812095541786
+        },
+        {
+          "op": "multiply",
+          "meanMs": 4.320876666666666,
+          "shareOfMeasuredTotal": 0.03436520982437744
+        },
+        {
+          "op": "encode",
+          "meanMs": 2.9878533333333337,
+          "shareOfMeasuredTotal": 0.023763281075938815
+        },
+        {
+          "op": "decrypt",
+          "meanMs": 1.1505433333333335,
+          "shareOfMeasuredTotal": 0.009150611348631871
+        },
+        {
+          "op": "add",
+          "meanMs": 1.1143499999999997,
+          "shareOfMeasuredTotal": 0.008862755066169828
+        }
+      ]
+    }
+  ]
+}

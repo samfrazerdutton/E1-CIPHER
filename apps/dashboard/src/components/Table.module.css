@@ -1,0 +1,29 @@
+.table {
+  font-size: 12.5px;
+}
+
+.table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--ink-muted);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border-strong);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--border);
+  color: var(--ink-secondary);
+  white-space: nowrap;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.num {
+  font-family: var(--font-mono);
+  color: var(--ink-primary);
+  text-align: right;
+}

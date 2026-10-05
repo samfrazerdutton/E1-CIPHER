@@ -1,0 +1,96 @@
+{
+  "experiment": {
+    "experimentId": "1e4e0e9a-0f93-4859-a934-b3bec5e3d84e",
+    "timestamp": "2026-10-05T01:20:49.692Z",
+    "host": {
+      "resultClass": "HOST_REFERENCE",
+      "platform": "win32",
+      "arch": "x64",
+      "osRelease": "10.0.26200",
+      "cpuModel": "AMD Ryzen 9 4900HS with Radeon Graphics         ",
+      "cpuCount": 16,
+      "totalMemoryBytes": 16556589056,
+      "nodeVersion": "v25.6.1",
+      "gitCommit": "263fa0f8938df775bd631bd00fd1590e1bcc6a87",
+      "capturedAt": "2026-10-05T01:20:49.718Z"
+    }
+  },
+  "fleetSize": 20,
+  "tick": 70,
+  "paramSet": "N4096",
+  "policyDecisions": [
+    {
+      "dataType": "camera_frame",
+      "placement": "LOCAL_PLAINTEXT",
+      "explanation": [
+        "Data type 'camera_frame' classified LOCAL_ONLY: Raw imagery is large, highly sensitive, and not needed off-device once features are extracted.",
+        "Battery remaining: 98.5%.",
+        "Network available: 12.49 Mbps.",
+        "Mission priority: elevated.",
+        "LOCAL_ONLY data never leaves the device regardless of battery/network/mission state."
+      ]
+    },
+    {
+      "dataType": "object_embedding",
+      "placement": "CLOUD_ENCRYPTED",
+      "explanation": [
+        "Data type 'object_embedding' classified ENCRYPTED: Derived feature vector can re-identify what the drone observed; encrypt before it leaves the device.",
+        "Battery remaining: 98.5%.",
+        "Network available: 12.49 Mbps.",
+        "Mission priority: elevated.",
+        "Encrypted path estimated cost: 1.95 ms.",
+        "Latency budget permits off-device aggregation; cloud encrypted execution selected."
+      ]
+    },
+    {
+      "dataType": "fleet_aggregate_statistic",
+      "placement": "CLOUD_ENCRYPTED",
+      "explanation": [
+        "Data type 'fleet_aggregate_statistic' classified AGGREGATABLE: Only the aggregate (mean/sum across drones) is useful centrally — CKKS lets the server compute it without seeing inputs.",
+        "Battery remaining: 98.5%.",
+        "Network available: 12.49 Mbps.",
+        "Mission priority: elevated.",
+        "Encrypted path estimated cost: 1.95 ms.",
+        "Latency budget permits off-device aggregation; cloud encrypted execution selected."
+      ]
+    },
+    {
+      "dataType": "battery_telemetry",
+      "placement": "CLOUD_PLAINTEXT",
+      "explanation": [
+        "Data type 'battery_telemetry' classified PLAINTEXT: Operationally necessary, low sensitivity, needed quickly and cheaply for fleet health dashboards.",
+        "Battery remaining: 98.5%.",
+        "Network available: 12.49 Mbps.",
+        "Mission priority: routine.",
+        "Low-sensitivity data permitted to transmit unencrypted; routed CLOUD_PLAINTEXT."
+      ]
+    }
+  ],
+  "fleetMeanAnomalyScore": 0.44421176054265993,
+  "fleetAlert": true,
+  "responderDroneIds": [
+    "drone-007",
+    "drone-008"
+  ],
+  "timingMs": {
+    "encryptAll": 48.8775,
+    "aggregate": 1.7692,
+    "decrypt": 2.3769
+  },
+  "bytes": {
+    "plaintext": 960,
+    "ckks": 2623700
+  },
+  "conventional": {
+    "dataTransmitted": "960 bytes (raw feature vectors, plaintext)",
+    "latencyMs": "sub-millisecond (no cryptographic overhead)",
+    "privacyExposure": "Aggregator/cloud operator sees all 20 drones' raw feature vectors individually, including each drone's exact infraAnomalyScore.",
+    "energy": "Not measured."
+  },
+  "confidentialEdge": {
+    "dataTransmitted": "2623700 bytes (20 CKKS ciphertexts, N4096)",
+    "latencyMs": "53.02 ms total compute (encrypt+aggregate+decrypt; see apps/fleet/compare.ts for critical-path-only timing)",
+    "privacyExposure": "Aggregator sees only ciphertext bytes and (if ever shared back) the fleet mean — never an individual drone's reading.",
+    "energy": "Not measured."
+  }
+}

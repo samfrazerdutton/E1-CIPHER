@@ -1,0 +1,50 @@
+/*
+  Design tokens. Dark-only by design: this is an engineering instrument
+  console, not a marketing page — see docs/README.md "Frontend" direction.
+  Categorical/status hexes are the dataviz skill's validated dark-mode
+  reference palette (references/palette.md), used unchanged so no palette
+  re-validation was needed.
+*/
+:root {
+  color-scheme: dark;
+
+  /* chrome */
+  --plane: #0a0d0f;
+  --surface: #12161a;
+  --surface-raised: #171c21;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* ink */
+  --ink-primary: #ffffff;
+  --ink-secondary: #c3c2b7;
+  --ink-muted: #898781;
+  --ink-faint: #5b5e60;
+
+  /* interactive accent (instrument blue) */
+  --accent: #3987e5;
+  --accent-dim: #1c5cab;
+
+  /* categorical (dark set, fixed order — see references/palette.md) */
+  --cat-1: #3987e5; /* blue */
+  --cat-2: #d95926; /* orange */
+  --cat-3: #199e70; /* aqua */
+  --cat-4: #c98500; /* yellow */
+  --cat-5: #d55181; /* magenta */
+  --cat-6: #008300; /* green */
+  --cat-7: #9085e9; /* violet */
+  --cat-8: #e66767; /* red */
+
+  /* status (reserved — never reused as categorical) */
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+
+  /* type */
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", monospace;
+
+  --radius: 3px;
+}

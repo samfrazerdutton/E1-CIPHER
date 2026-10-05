@@ -1,0 +1,70 @@
+{
+  "experiment": {
+    "experimentId": "74a900f5-c5c2-4b0d-b8e7-d7c7037b5976",
+    "timestamp": "2026-10-05T01:23:58.097Z",
+    "host": {
+      "resultClass": "HOST_REFERENCE",
+      "platform": "win32",
+      "arch": "x64",
+      "osRelease": "10.0.26200",
+      "cpuModel": "AMD Ryzen 9 4900HS with Radeon Graphics         ",
+      "cpuCount": 16,
+      "totalMemoryBytes": 16556589056,
+      "nodeVersion": "v25.6.1",
+      "gitCommit": "263fa0f8938df775bd631bd00fd1590e1bcc6a87",
+      "capturedAt": "2026-10-05T01:23:58.123Z"
+    }
+  },
+  "target": "drone-001",
+  "plaintextSingleReadingByteLength": 48,
+  "plaintextEntropySampleByteLength": 19200,
+  "plaintextEntropySampleTicks": 400,
+  "ciphertextByteLength": 131185,
+  "plaintextEntropyBitsPerByte": 7.50691836779495,
+  "ciphertextWholeBufferEntropyBitsPerByte": 4.973680437816566,
+  "ciphertextEntropyByWordOffset": [
+    0.007534370195942559,
+    7.988657015512964,
+    7.989137800207659,
+    7.987564225939124,
+    6.394452247903198,
+    0.8078642856453405,
+    0.0037674363160556143,
+    0.0047092819777667634
+  ],
+  "fleetSnapshotExposedUnderPlaintext": [
+    {
+      "droneId": "drone-000",
+      "features": {
+        "altitudeM": 80.13356265098129,
+        "speedMps": 3.4188491857804277,
+        "vibrationMm2s": 2.3615811310722377,
+        "temperatureC": 21.53093491354059,
+        "batteryPct": 98.64651831811747,
+        "infraAnomalyScore": 0.43231632894571526
+      }
+    },
+    {
+      "droneId": "drone-001",
+      "features": {
+        "altitudeM": 82.00891272237705,
+        "speedMps": 3.0874593890514417,
+        "vibrationMm2s": 2.3522539870443313,
+        "temperatureC": 23.63092336827188,
+        "batteryPct": 98.6285389623672,
+        "infraAnomalyScore": 0.3609788906152414
+      }
+    },
+    {
+      "droneId": "drone-002",
+      "features": {
+        "altitudeM": 78.5717766130217,
+        "speedMps": 3.1916442426259537,
+        "vibrationMm2s": 2.4037267880037825,
+        "temperatureC": 26.783374454823292,
+        "batteryPct": 98.35785750243635,
+        "infraAnomalyScore": 0.3976694712408774
+      }
+    }
+  ]
+}
