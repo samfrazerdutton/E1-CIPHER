@@ -3,6 +3,7 @@ import { DataGate } from '../components/DataGate';
 import { Panel } from '../components/Panel';
 import { Badge, ResultClassBadge } from '../components/Badge';
 import { TopStrip } from '../components/TopStrip';
+import { PipelineDiagram } from '../components/PipelineDiagram';
 import tableStyles from '../components/Table.module.css';
 import type { KernelBenchData } from '../lib/types';
 
@@ -54,6 +55,17 @@ export function ResearchView() {
                   </div>
                 ))}
               </div>
+            </Panel>
+
+            <Panel title="Why Efficient?" subtitle="The key-switching pipeline (rescale/relinearize/rotate) decomposes into this fixed, regular, five-stage shape">
+              <PipelineDiagram />
+              <p style={{ marginTop: 14, fontSize: 12, color: 'var(--ink-muted)', maxWidth: 680 }}>
+                Every stage is fixed-size, branch-free, and dominated by moving coefficient arrays through regular
+                arithmetic rather than by control flow — parallel PEs per NTT butterfly stage or per RNS limb,
+                streaming producer/consumer between stages, data reuse across the fixed key-switch matrix. That is
+                the kind of workload a spatial-dataflow architecture targets. Whether Electron E1 actually realizes
+                an advantage here is H1 above — open until real hardware is available.
+              </p>
             </Panel>
 
             <Panel

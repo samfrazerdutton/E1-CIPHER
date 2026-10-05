@@ -80,12 +80,12 @@ export function SimulatorView() {
         <Panel title="Controls">
           <div className={controls.row}>
             <span className={controls.label}>fleet size</span>
-            <input type="range" min={1} max={50} value={fleetSize} onChange={(e) => setFleetSize(Number(e.target.value))} />
+            <input aria-label="fleet size" type="range" min={1} max={50} value={fleetSize} onChange={(e) => setFleetSize(Number(e.target.value))} />
             <span className={controls.value}>{fleetSize}</span>
           </div>
           <div className={controls.row}>
             <span className={controls.label}>tick</span>
-            <input type="range" min={0} max={200} value={tick} onChange={(e) => setTick(Number(e.target.value))} />
+            <input aria-label="tick" type="range" min={0} max={200} value={tick} onChange={(e) => setTick(Number(e.target.value))} />
             <span className={controls.value}>{tick}</span>
             <button className={controls.playButton} onClick={() => setPlaying((p) => !p)}>
               {playing ? 'pause' : 'play'}
@@ -93,7 +93,7 @@ export function SimulatorView() {
           </div>
           <div className={controls.row}>
             <span className={controls.label}>scenario</span>
-            <select value={scenario} onChange={(e) => setScenario(e.target.value as MissionScenario)}>
+            <select aria-label="scenario" value={scenario} onChange={(e) => setScenario(e.target.value as MissionScenario)}>
               {SCENARIOS.map((s) => (
                 <option key={s.value} value={s.value}>
                   {s.label}
@@ -103,7 +103,7 @@ export function SimulatorView() {
           </div>
           <div className={controls.row}>
             <span className={controls.label}>mission priority</span>
-            <select value={missionPriority} onChange={(e) => setMissionPriority(e.target.value as typeof missionPriority)}>
+            <select aria-label="mission priority" value={missionPriority} onChange={(e) => setMissionPriority(e.target.value as typeof missionPriority)}>
               <option value="routine">routine</option>
               <option value="elevated">elevated</option>
               <option value="critical">critical</option>
@@ -111,12 +111,12 @@ export function SimulatorView() {
           </div>
           <div className={controls.row}>
             <span className={controls.label}>latency budget</span>
-            <input type="range" min={10} max={1000} step={10} value={latencyBudgetMs} onChange={(e) => setLatencyBudgetMs(Number(e.target.value))} />
+            <input aria-label="latency budget in milliseconds" type="range" min={10} max={1000} step={10} value={latencyBudgetMs} onChange={(e) => setLatencyBudgetMs(Number(e.target.value))} />
             <span className={controls.value}>{latencyBudgetMs}ms</span>
           </div>
           <div className={controls.row}>
             <span className={controls.label}>edge node</span>
-            <input type="checkbox" checked={edgeNodeAvailable} onChange={(e) => setEdgeNodeAvailable(e.target.checked)} />
+            <input aria-label="edge node available" type="checkbox" checked={edgeNodeAvailable} onChange={(e) => setEdgeNodeAvailable(e.target.checked)} />
           </div>
         </Panel>
 

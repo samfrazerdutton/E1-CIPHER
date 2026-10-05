@@ -477,10 +477,9 @@ commands first (or just use the ones already committed in `results/`).
   (one ciphertext per drone) and reports the resulting bandwidth cost
   honestly rather than optimizing it away before measuring the naive case.
 - Chained multi-level multiplicative depth testing per parameter set.
-- A true interactive 3D fleet simulator (live drones/terrain/comm-links
-  with runtime attack injection) — `apps/dashboard` visualizes real
-  recorded results; it does not yet run a live, steerable simulation in
-  the browser.
+- Extending the dashboard's SIMULATOR view from live 2D telemetry/policy
+  to a true 3D fleet simulator (terrain, comm-link visualization, runtime
+  attack injection — compromise-a-drone / compromise-the-cloud toggles).
 - An approximate-comparison (polynomial sign-function) CKKS circuit for
   real encrypted argmax, to remove the local-self-selection step in
   `apps/demo/killer-demo.ts`.
