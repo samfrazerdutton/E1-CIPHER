@@ -20,17 +20,12 @@ std::string json_escape(std::string_view s) {
 
 std::string to_json_line(const AuditEvent& e) {
     std::ostringstream oss;
-    oss << "{"
-        << R"("timestamp_ms":)" << e.timestamp_ms << ","
-        << R"("drone_id":")" << json_escape(e.drone_id) << "\","
-        << R"("mission_id":")" << json_escape(e.mission_id) << "\","
-        << R"("data_type":")" << json_escape(e.data_type) << "\","
-        << R"("classification":")" << policy::to_string(e.classification) << "\","
-        << R"("placement":")" << policy::to_string(e.placement) << "\","
-        << R"("encrypted":)" << (e.encrypted ? "true" : "false") << ","
-        << R"("reason":")" << json_escape(e.reason) << "\","
-        << R"("software_version":")" << json_escape(e.software_version) << "\","
-        << R"("config_hash":")" << json_escape(e.config_hash) << "\""
+    oss << "{" << R"("timestamp_ms":)" << e.timestamp_ms << "," << R"("drone_id":")" << json_escape(e.drone_id) << "\","
+        << R"("mission_id":")" << json_escape(e.mission_id) << "\"," << R"("data_type":")" << json_escape(e.data_type)
+        << "\"," << R"("classification":")" << policy::to_string(e.classification) << "\"," << R"("placement":")"
+        << policy::to_string(e.placement) << "\"," << R"("encrypted":)" << (e.encrypted ? "true" : "false") << ","
+        << R"("reason":")" << json_escape(e.reason) << "\"," << R"("software_version":")"
+        << json_escape(e.software_version) << "\"," << R"("config_hash":")" << json_escape(e.config_hash) << "\""
         << "}";
     return oss.str();
 }
