@@ -1,0 +1,10 @@
+{
+  "paramSet": "N4096",
+  "measuredPerOp": { "encryptMs": 0.90125, "addMs": 0.90125, "ciphertextBytes": 131185 },
+  "rows": [
+    { "devices": 1, "plaintextBandwidthMb": 5.34058e-05, "fullCkksBandwidthMb": 0.250216, "selectiveCkksBandwidthMb": 0.125115, "fullCkksEncryptionMs": 1.8025, "selectiveCkksEncryptionMs": 0.90125, "fullCkksGatewayMs": 0.90125, "selectiveCkksGatewayMs": 0 },
+    { "devices": 10, "plaintextBandwidthMb": 0.000534058, "fullCkksBandwidthMb": 2.50216, "selectiveCkksBandwidthMb": 1.25115, "fullCkksEncryptionMs": 18.025, "selectiveCkksEncryptionMs": 9.0125, "fullCkksGatewayMs": 17.1238, "selectiveCkksGatewayMs": 8.11125 },
+    { "devices": 100, "plaintextBandwidthMb": 0.00534058, "fullCkksBandwidthMb": 25.0216, "selectiveCkksBandwidthMb": 12.5115, "fullCkksEncryptionMs": 180.25, "selectiveCkksEncryptionMs": 90.125, "fullCkksGatewayMs": 179.349, "selectiveCkksGatewayMs": 89.2237 },
+    { "devices": 1000, "plaintextBandwidthMb": 0.0534058, "fullCkksBandwidthMb": 250.216, "selectiveCkksBandwidthMb": 125.115, "fullCkksEncryptionMs": 1802.5, "selectiveCkksEncryptionMs": 901.25, "fullCkksGatewayMs": 1801.6, "selectiveCkksGatewayMs": 900.349 }
+  ]
+}

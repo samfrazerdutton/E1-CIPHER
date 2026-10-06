@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavRail } from './components/NavRail';
 import type { ViewId } from './views';
+import { RuntimeView } from './views/RuntimeView';
 import { CryptoView } from './views/CryptoView';
 import { ResearchView } from './views/ResearchView';
 import { FleetView } from './views/FleetView';
@@ -11,6 +12,7 @@ import { SecurityView } from './views/SecurityView';
 import { PlatformView } from './views/PlatformView';
 
 const VIEWS: Record<ViewId, () => React.ReactElement> = {
+  runtime: RuntimeView,
   crypto: CryptoView,
   research: ResearchView,
   fleet: FleetView,
@@ -22,7 +24,7 @@ const VIEWS: Record<ViewId, () => React.ReactElement> = {
 };
 
 export default function App() {
-  const [active, setActive] = useState<ViewId>('crypto');
+  const [active, setActive] = useState<ViewId>('runtime');
   const View = VIEWS[active];
 
   return (

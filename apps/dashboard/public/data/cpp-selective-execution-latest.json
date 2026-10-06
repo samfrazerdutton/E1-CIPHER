@@ -1,0 +1,8 @@
+{
+  "paramSet": "N4096",
+  "modes": [
+    { "name": "A: Everything plaintext", "latencyMs": 0.1472, "bandwidthBytes": 184, "securityExposedBytes": 160 },
+    { "name": "B: Everything encrypted", "latencyMs": 9.17, "bandwidthBytes": 655925, "securityExposedBytes": 0 },
+    { "name": "C: Selective (runtime::Runtime::decide)", "latencyMs": 1.8447, "bandwidthBytes": 393563, "securityExposedBytes": 0 }
+  ]
+}

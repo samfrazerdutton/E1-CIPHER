@@ -1,0 +1,13 @@
+{
+  "paramSet": "N8192",
+  "kernels": [
+    { "op": "encode", "meanMs": 0.3353, "pctShare": 3.07705, "candidateValue": "LOW VALUE", "structuralNote": "FFT-like transform, regular, data-parallel across coefficients" },
+    { "op": "encrypt", "meanMs": 3.1735, "pctShare": 29.1232, "candidateValue": "MEDIUM VALUE", "structuralNote": "Includes RLWE error sampling -- less uniformly regular than the arithmetic ops" },
+    { "op": "add", "meanMs": 0.0371, "pctShare": 0.340467, "candidateValue": "LOW VALUE", "structuralNote": "Fully data-parallel elementwise add, low arithmetic intensity" },
+    { "op": "multiply (raw)", "meanMs": 0.2671, "pctShare": 2.45118, "candidateValue": "LOW VALUE", "structuralNote": "Fully data-parallel elementwise multiply" },
+    { "op": "relinearize", "meanMs": 2.2176, "pctShare": 20.3509, "candidateValue": "HIGH VALUE", "structuralNote": "RNS decomposition -> NTT -> fixed modular multiply-adds against a public key matrix -> inverse NTT -- regular, high arithmetic intensity, high data movement" },
+    { "op": "rescale", "meanMs": 2.7974, "pctShare": 25.6718, "candidateValue": "HIGH VALUE", "structuralNote": "Base conversion across the RNS chain following relinearize -- same shape as above" },
+    { "op": "rotate", "meanMs": 1.985, "pctShare": 18.2164, "candidateValue": "HIGH VALUE", "structuralNote": "Key-switching via Galois automorphism -- same NTT/modmul shape as relinearize" },
+    { "op": "decrypt", "meanMs": 0.0838, "pctShare": 0.769033, "candidateValue": "LOW VALUE", "structuralNote": "One modular multiply-add pass per RNS limb" }
+  ]
+}

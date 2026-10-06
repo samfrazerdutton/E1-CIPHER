@@ -5,7 +5,11 @@
 #include "e1cipher/diagnostics/security_gate.hpp"
 
 #include "drone_inspection/inspect.hpp"
+#include "experiments/accelerator_opportunity.hpp"
+#include "experiments/scaling.hpp"
+#include "experiments/selective_execution.hpp"
 #include "fleet_gateway/fleet.hpp"
+#include "runtime_demo/runtime_demo.hpp"
 
 using namespace e1cipher;
 
@@ -14,12 +18,13 @@ namespace {
 void print_usage() {
     std::puts("e1cipher <subcommand> [options]\n");
     std::puts("Subcommands:");
+    std::puts("  runtime-demo   The flagship confidential-edge-runtime demonstration (alias: demo)");
     std::puts(
-        "  inspect    Run the drone-inspection reference application (--drones N --scenario S --seed N --tick N)");
-    std::puts("  fleet      Run the fleet-gateway plaintext-vs-CKKS aggregation comparison");
-    std::puts("  platform   Print a platform report (host, compiler, E1 toolchain status)");
-    std::puts("  security   Run the security gate (PASS/WARN/FAIL)");
-    std::puts("  demo       One-command end-to-end demo (alias for `inspect` with defaults)");
+        "  inspect        Run the drone-inspection reference application (--drones N --scenario S --seed N --tick N)");
+    std::puts("  fleet          Run the fleet-gateway plaintext-vs-CKKS aggregation comparison");
+    std::puts("  experiment     Run an experiment: selective | accelerator | scaling");
+    std::puts("  platform       Print a platform report (host, compiler, E1 toolchain status)");
+    std::puts("  security       Run the security gate (PASS/WARN/FAIL)");
 }
 
 telemetry::Scenario parse_scenario(const std::string& s) {
@@ -63,6 +68,19 @@ int run_fleet_cli(int argc, char** argv) {
     return apps::run_fleet(opts);
 }
 
+int run_experiment_cli(int argc, char** argv) {
+    if (argc < 3) {
+        std::puts("usage: e1cipher experiment <selective|accelerator|scaling>");
+        return 1;
+    }
+    const std::string which = argv[2];
+    if (which == "selective") return apps::run_selective_execution_experiment();
+    if (which == "accelerator") return apps::run_accelerator_opportunity_experiment();
+    if (which == "scaling") return apps::run_scaling_experiment();
+    std::printf("Unknown experiment: %s (expected selective|accelerator|scaling)\n", which.c_str());
+    return 1;
+}
+
 int run_platform_cli() {
     const auto report = diagnostics::build_platform_report();
     std::fputs(diagnostics::format_platform_report(report).c_str(), stdout);
@@ -84,8 +102,10 @@ int main(int argc, char** argv) {
     }
     const std::string subcommand = argv[1];
 
-    if (subcommand == "inspect" || subcommand == "demo") return run_inspect_cli(argc, argv);
+    if (subcommand == "runtime-demo" || subcommand == "demo") return apps::run_runtime_demo();
+    if (subcommand == "inspect") return run_inspect_cli(argc, argv);
     if (subcommand == "fleet") return run_fleet_cli(argc, argv);
+    if (subcommand == "experiment") return run_experiment_cli(argc, argv);
     if (subcommand == "platform") return run_platform_cli();
     if (subcommand == "security") return run_security_cli();
 

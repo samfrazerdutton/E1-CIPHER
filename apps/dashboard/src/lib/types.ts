@@ -153,6 +153,43 @@ export interface SecurityManifest {
   testStatus: string;
 }
 
+// --- C++ runtime layer (this session) -- apps/experiments, apps/runtime_demo ---
+
+export interface CppSelectiveExecutionData {
+  paramSet: string;
+  modes: { name: string; latencyMs: number; bandwidthBytes: number; securityExposedBytes: number }[];
+}
+
+export interface CppAcceleratorKernel {
+  op: string;
+  meanMs: number;
+  pctShare: number;
+  candidateValue: 'HIGH VALUE' | 'MEDIUM VALUE' | 'LOW VALUE';
+  structuralNote: string;
+}
+
+export interface CppAcceleratorOpportunityData {
+  paramSet: string;
+  kernels: CppAcceleratorKernel[];
+}
+
+export interface CppScalingRow {
+  devices: number;
+  plaintextBandwidthMb: number;
+  fullCkksBandwidthMb: number;
+  selectiveCkksBandwidthMb: number;
+  fullCkksEncryptionMs: number;
+  selectiveCkksEncryptionMs: number;
+  fullCkksGatewayMs: number;
+  selectiveCkksGatewayMs: number;
+}
+
+export interface CppScalingData {
+  paramSet: string;
+  measuredPerOp: { encryptMs: number; addMs: number; ciphertextBytes: number };
+  rows: CppScalingRow[];
+}
+
 export interface CraEvidenceData {
   manifest: SecurityManifest;
   assets: { path: string; kind: string; description: string }[];

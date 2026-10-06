@@ -2,6 +2,7 @@ import styles from './NavRail.module.css';
 import type { ViewId } from '../views';
 
 const ITEMS: { id: ViewId; code: string; label: string }[] = [
+  { id: 'runtime', code: 'RT', label: 'Runtime' },
   { id: 'crypto', code: 'CK', label: 'Crypto' },
   { id: 'research', code: 'RS', label: 'Research' },
   { id: 'fleet', code: 'FL', label: 'Fleet' },
@@ -17,7 +18,7 @@ export function NavRail({ active, onSelect }: { active: ViewId; onSelect: (v: Vi
     <nav className={styles.rail}>
       <div className={styles.brand}>
         <div className={styles.brandName}>E1-CIPHER</div>
-        <div className={styles.brandTag}>Confidential physical AI fabric</div>
+        <div className={styles.brandTag}>Confidential edge compute runtime</div>
       </div>
       {ITEMS.map((item) => (
         <button

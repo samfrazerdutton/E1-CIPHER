@@ -5,6 +5,10 @@
 add_library(e1cipher_apps STATIC
     drone_inspection/inspect.cpp
     fleet_gateway/fleet.cpp
+    runtime_demo/runtime_demo.cpp
+    experiments/selective_execution.cpp
+    experiments/accelerator_opportunity.cpp
+    experiments/scaling.cpp
 )
 target_include_directories(e1cipher_apps PUBLIC "${CMAKE_SOURCE_DIR}/apps")
 target_link_libraries(e1cipher_apps PUBLIC e1cipher_core)
